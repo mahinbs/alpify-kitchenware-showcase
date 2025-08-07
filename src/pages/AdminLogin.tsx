@@ -122,11 +122,7 @@ const AdminLogin = () => {
             </form>
 
             {/* Admin Credentials Info */}
-            <div className="mt-8 p-4 bg-muted/30 rounded-lg border border-border">
-              <h3 className="text-sm font-semibold text-foreground mb-2">
-            </h3>
-              
-            </div>
+            
           </div>
         </motion.div>
       </div>
