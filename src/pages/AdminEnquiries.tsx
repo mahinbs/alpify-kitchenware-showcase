@@ -204,9 +204,18 @@ const AdminEnquiries = () => {
         <div className="max-w-7xl mx-auto px-6">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-            <div>
-              <h1 className="text-4xl font-bold text-primary mb-2">Customer Enquiries</h1>
-              <p className="text-muted-foreground">Manage and respond to customer inquiries</p>
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 rounded-lg overflow-hidden shadow-lg">
+                <img 
+                  src="https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png"
+                  alt="Alpify Global Logo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h1 className="text-4xl font-bold text-primary mb-2">Customer Enquiries</h1>
+                <p className="text-muted-foreground">Manage and respond to customer inquiries</p>
+              </div>
             </div>
             <div className="flex items-center space-x-4 mt-4 md:mt-0">
               <motion.button

@@ -15,7 +15,16 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-2xl font-bold mb-4">Alpify Global</h3>
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 rounded-lg overflow-hidden shadow-lg">
+                <img 
+                  src="https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png"
+                  alt="Alpify Global Logo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-2xl font-bold">Alpify Global</h3>
+            </div>
             <p className="text-steel-light leading-relaxed">
               Your trusted partner for premium stainless steel kitchenware export. 
               Delivering excellence to global markets.

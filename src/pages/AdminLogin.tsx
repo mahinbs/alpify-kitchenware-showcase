@@ -59,9 +59,13 @@ const AdminLogin = () => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="w-16 h-16 bg-gradient-to-br from-primary to-vibrant-orange rounded-full flex items-center justify-center mx-auto mb-4"
+                className="w-20 h-20 rounded-full overflow-hidden shadow-lg mx-auto mb-4"
               >
-                <Lock className="w-8 h-8 text-white" />
+                <img 
+                  src="https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png"
+                  alt="Alpify Global Logo"
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
               <h1 className="text-3xl font-bold text-primary mb-2">Admin Login</h1>
               <p className="text-muted-foreground">Access the product management panel</p>

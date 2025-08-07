@@ -81,14 +81,18 @@ const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
           {/* Logo */}
           <Link 
             to="/" 
-            className="flex items-center space-x-2 group"
+            className="flex items-center space-x-3 group"
           >
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-10 h-10 bg-gradient-to-br from-steel-primary to-brand-blue rounded-lg flex items-center justify-center"
+              className="w-12 h-12 rounded-lg overflow-hidden shadow-lg"
             >
-              <span className="text-white font-bold text-lg">A</span>
+              <img 
+                src="https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png"
+                alt="Alpify Global Logo"
+                className="w-full h-full object-cover"
+              />
             </motion.div>
             <div className="hidden sm:block">
               <h1 className="text-xl lg:text-2xl font-serif font-bold text-steel-primary dark:text-white">
