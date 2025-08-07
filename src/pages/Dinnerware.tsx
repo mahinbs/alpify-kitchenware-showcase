@@ -65,7 +65,7 @@ const Dinnerware = () => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-4 right-4 bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-semibold">
-                    ₹{typeof product.price === 'number' ? product.price.toFixed(2) : product.price}
+                    ₹{product.price.toFixed(2)}
                   </div>
                 </div>
                 
