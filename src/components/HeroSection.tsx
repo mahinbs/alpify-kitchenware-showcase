@@ -92,8 +92,7 @@ const HeroSection = () => {
   return (
     <section 
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ paddingTop: '5rem' }} // Fixed padding to account for header
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 lg:pt-20"
     >
       {/* Hero Background with Parallax */}
       <div className="absolute inset-0">

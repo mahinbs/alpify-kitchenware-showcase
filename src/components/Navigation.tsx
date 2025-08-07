@@ -38,7 +38,7 @@ const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
       y: 0, 
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 20
       }
@@ -51,15 +51,15 @@ const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
       height: 0,
       transition: {
         duration: 0.3,
-        ease: "easeInOut"
+        ease: "easeInOut" as const
       }
     },
     open: {
       opacity: 1,
-      height: "auto",
+      height: "auto" as const,
       transition: {
         duration: 0.3,
-        ease: "easeInOut"
+        ease: "easeInOut" as const
       }
     }
   };
@@ -70,9 +70,9 @@ const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
       initial="hidden"
       animate="visible"
       className={cn(
-        "fixed top-0 left-0 right-0 z-nav transition-all duration-300 h-16 lg:h-20",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-16 lg:h-20",
         isScrolled 
-          ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg" 
+          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg" 
           : "bg-transparent"
       )}
     >
