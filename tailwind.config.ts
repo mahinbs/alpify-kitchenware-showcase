@@ -52,6 +52,18 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Alpify Brand Colors
+				steel: {
+					primary: 'hsl(var(--steel-primary))',
+					light: 'hsl(var(--steel-light))',
+					accent: 'hsl(var(--steel-accent))',
+				},
+				brand: {
+					navy: 'hsl(var(--brand-navy))',
+					blue: 'hsl(var(--brand-blue))',
+					light: 'hsl(var(--brand-light))',
+				},
+				metallic: 'hsl(var(--metallic))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -67,6 +79,20 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			backgroundImage: {
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-steel': 'var(--gradient-steel)',
+				'gradient-brand': 'var(--gradient-brand)',
+			},
+			boxShadow: {
+				'soft': 'var(--shadow-soft)',
+				'medium': 'var(--shadow-medium)',
+				'strong': 'var(--shadow-strong)',
+			},
+			transitionTimingFunction: {
+				'smooth': 'var(--transition-smooth)',
+				'bounce': 'var(--transition-bounce)',
 			},
 			keyframes: {
 				'accordion-down': {

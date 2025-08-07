@@ -18,6 +18,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Alpify Brand Variants
+        hero: "bg-gradient-brand text-white hover:shadow-medium transform hover:-translate-y-0.5 transition-all duration-300 font-semibold",
+        cta: "bg-accent text-accent-foreground hover:bg-brand-blue hover:shadow-soft transition-all duration-300 font-medium",
+        steel: "bg-steel-light text-steel-primary border border-steel-accent hover:bg-steel-accent hover:text-white transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

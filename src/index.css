@@ -2,41 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Alpify Global Design System - Professional B2B Kitchenware Export */
 
 @layer base {
   :root {
+    /* Brand Colors - Professional Steel & Blue Palette */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    --foreground: 215 25% 27%;
+    
+    /* Steel & Metallic Tones */
+    --steel-primary: 210 15% 35%;
+    --steel-light: 210 20% 85%;
+    --steel-accent: 210 30% 65%;
+    --metallic: 220 8% 55%;
+    
+    /* Brand Blues */
+    --brand-navy: 215 35% 25%;
+    --brand-blue: 215 60% 45%;
+    --brand-light: 215 45% 92%;
+    
+    /* UI Components */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 215 25% 27%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    --popover-foreground: 215 25% 27%;
+    
+    --primary: 215 35% 25%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 210 20% 95%;
+    --secondary-foreground: 215 25% 27%;
+    
+    --muted: 215 15% 95%;
+    --muted-foreground: 215 15% 45%;
+    
+    --accent: 215 60% 45%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 215 15% 88%;
+    --input: 215 15% 92%;
+    --ring: 215 60% 45%;
+    
+    /* Design System Extensions */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--steel-primary)) 0%, hsl(var(--brand-navy)) 100%);
+    --gradient-steel: linear-gradient(180deg, hsl(var(--steel-light)) 0%, hsl(var(--background)) 100%);
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand-blue)) 0%, hsl(var(--accent)) 100%);
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 12px hsl(var(--steel-primary) / 0.08);
+    --shadow-medium: 0 8px 25px hsl(var(--steel-primary) / 0.12);
+    --shadow-strong: 0 16px 40px hsl(var(--steel-primary) / 0.16);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
