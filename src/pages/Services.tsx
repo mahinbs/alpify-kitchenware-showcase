@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
@@ -19,6 +20,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Services = () => {
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+  const navigate = useNavigate();
   const heroRef = useRef<HTMLElement>(null);
   const particlesRef = useRef<HTMLDivElement[]>([]);
 
@@ -63,7 +65,8 @@ const Services = () => {
       description: "Professional-grade cooking solutions for every kitchen",
       features: ["Non-stick surfaces", "Heat distribution", "Durability tested"],
       color: "vibrant-orange",
-      bgGradient: "from-vibrant-orange/20 to-vibrant-orange/5"
+      bgGradient: "from-vibrant-orange/20 to-vibrant-orange/5",
+      path: "/cookware"
     },
     {
       title: "Elegant Dinnerware",
@@ -71,7 +74,8 @@ const Services = () => {
       description: "Beautiful dining sets that make every meal special",
       features: ["Dishwasher safe", "Scratch resistant", "Modern designs"],
       color: "electric-blue",
-      bgGradient: "from-electric-blue/20 to-electric-blue/5"
+      bgGradient: "from-electric-blue/20 to-electric-blue/5",
+      path: "/dinnerware"
     },
     {
       title: "Stylish Drinkware",
@@ -79,7 +83,8 @@ const Services = () => {
       description: "Premium glasses and cups for every beverage",
       features: ["Temperature retention", "Ergonomic design", "Leak-proof"],
       color: "emerald-green",
-      bgGradient: "from-emerald-green/20 to-emerald-green/5"
+      bgGradient: "from-emerald-green/20 to-emerald-green/5",
+      path: "/drinkware"
     },
     {
       title: "Functional Serveware",
@@ -87,7 +92,8 @@ const Services = () => {
       description: "Elegant serving solutions for entertaining",
       features: ["Easy serving", "Stain resistant", "Multi-purpose"],
       color: "vibrant-purple",
-      bgGradient: "from-vibrant-purple/20 to-vibrant-purple/5"
+      bgGradient: "from-vibrant-purple/20 to-vibrant-purple/5",
+      path: "/serveware"
     },
     {
       title: "Smart Storage",
@@ -95,7 +101,8 @@ const Services = () => {
       description: "Innovative storage solutions for organized kitchens",
       features: ["Airtight seals", "Space efficient", "Easy access"],
       color: "coral",
-      bgGradient: "from-coral/20 to-coral/5"
+      bgGradient: "from-coral/20 to-coral/5",
+      path: "/storage"
     },
     {
       title: "Premium Tableware",
@@ -103,7 +110,8 @@ const Services = () => {
       description: "Complete tableware sets for every occasion",
       features: ["Complete sets", "Mix & match", "Event ready"],
       color: "golden-yellow",
-      bgGradient: "from-golden-yellow/20 to-golden-yellow/5"
+      bgGradient: "from-golden-yellow/20 to-golden-yellow/5",
+      path: "/tableware"
     }
   ];
 
@@ -303,6 +311,7 @@ const Services = () => {
                   </div>
 
                   <motion.button
+                    onClick={() => navigate(category.path)}
                     className={`mt-6 px-6 py-2 bg-${category.color}/20 text-${category.color} rounded-lg font-medium hover:bg-${category.color}/30 transition-colors`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

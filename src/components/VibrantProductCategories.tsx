@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Star, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 import cookware from "@/assets/cookware.jpg";
 import dinnerware from "@/assets/dinnerware.jpg";
 import drinkware from "@/assets/drinkware.jpg";
@@ -208,14 +209,16 @@ const VibrantProductCategories = () => {
                     ))}
                   </div>
 
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`w-full bg-${category.accentColor} text-white font-semibold py-3 px-4 rounded-xl hover:bg-${category.accentColor}/90 transition-colors duration-300 flex items-center justify-center`}
-                  >
-                    <span>Explore {category.title}</span>
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                  </motion.button>
+                  <Link to={`/${category.id}`}>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`w-full bg-${category.accentColor} text-white font-semibold py-3 px-4 rounded-xl hover:bg-${category.accentColor}/90 transition-colors duration-300 flex items-center justify-center`}
+                    >
+                      <span>Explore {category.title}</span>
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                    </motion.button>
+                  </Link>
                 </div>
               </div>
             </motion.div>

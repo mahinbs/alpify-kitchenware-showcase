@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Footer = () => {
   const currentYear = new Date().getFullYear()
 
@@ -56,6 +58,14 @@ const Footer = () => {
                   Terms
                 </a>
               </li>
+              <li>
+                <Link 
+                  to="/certificate"
+                  className="text-steel-light hover:text-white transition-colors duration-300"
+                >
+                  Certificate
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -89,6 +99,12 @@ const Footer = () => {
               >
                 Terms of Service
               </a>
+              <Link 
+                to="/admin/login" 
+                className="text-steel-light hover:text-white transition-colors duration-300 text-sm"
+              >
+                Admin
+              </Link>
             </div>
           </div>
         </div>

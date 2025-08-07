@@ -59,6 +59,35 @@ const ContactUs = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Get form data
+    const formData = new FormData(e.target as HTMLFormElement);
+    const firstName = formData.get('firstName') as string;
+    const lastName = formData.get('lastName') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
+    const message = formData.get('message') as string;
+
+    // Create enquiry object
+    const enquiry = {
+      id: Date.now().toString(),
+      name: `${firstName} ${lastName}`,
+      email,
+      phone: phone || 'Not provided',
+      subject: 'Contact Form Submission',
+      message,
+      category: 'General Inquiry',
+      status: 'new' as const,
+      priority: 'medium' as const,
+      createdAt: new Date().toISOString(),
+      source: 'Contact Form'
+    };
+
+    // Save to localStorage
+    const existingEnquiries = localStorage.getItem('adminEnquiries');
+    const enquiries = existingEnquiries ? JSON.parse(existingEnquiries) : [];
+    enquiries.unshift(enquiry); // Add to beginning
+    localStorage.setItem('adminEnquiries', JSON.stringify(enquiries));
+
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -222,6 +251,7 @@ const ContactUs = () => {
                     >
                       <Input
                         id="firstName"
+                        name="firstName"
                         type="text"
                         placeholder="John"
                         className="mt-2 bg-background/50 border-steel-light/30 focus:border-vibrant-orange transition-all duration-300"
@@ -239,6 +269,7 @@ const ContactUs = () => {
                     >
                       <Input
                         id="lastName"
+                        name="lastName"
                         type="text"
                         placeholder="Doe"
                         className="mt-2 bg-background/50 border-steel-light/30 focus:border-electric-blue transition-all duration-300"
@@ -258,6 +289,7 @@ const ContactUs = () => {
                   >
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       placeholder="john.doe@company.com"
                       className="mt-2 bg-background/50 border-steel-light/30 focus:border-emerald-green transition-all duration-300"
@@ -276,6 +308,7 @@ const ContactUs = () => {
                   >
                     <Input
                       id="phone"
+                      name="phone"
                       type="tel"
                       placeholder="+91 98863 17956"
                       className="mt-2 bg-background/50 border-steel-light/30 focus:border-vibrant-purple transition-all duration-300"
@@ -293,6 +326,7 @@ const ContactUs = () => {
                   >
                     <Textarea
                       id="message"
+                      name="message"
                       placeholder="Tell us about your requirements..."
                       className="mt-2 min-h-[120px] bg-background/50 border-steel-light/30 focus:border-coral transition-all duration-300"
                       required

@@ -11,6 +11,16 @@ import AboutUs from "./pages/AboutUs";
 import Certificate from "./pages/Certificate";
 import Services from "./pages/Services";
 import ContactUs from "./pages/ContactUs";
+import Cookware from "./pages/Cookware";
+import Dinnerware from "./pages/Dinnerware";
+import Drinkware from "./pages/Drinkware";
+import Serveware from "./pages/Serveware";
+import Storage from "./pages/Storage";
+import Tableware from "./pages/Tableware";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminEnquiries from "./pages/AdminEnquiries";
+import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -116,6 +126,24 @@ const App = () => {
                   <Route path="/certificate" element={<Certificate />} />
                   <Route path="/services" element={<Services />} />
                   <Route path="/contact" element={<ContactUs />} />
+                  <Route path="/cookware" element={<Cookware />} />
+                  <Route path="/dinnerware" element={<Dinnerware />} />
+                  <Route path="/drinkware" element={<Drinkware />} />
+                  <Route path="/serveware" element={<Serveware />} />
+                  <Route path="/storage" element={<Storage />} />
+                  <Route path="/tableware" element={<Tableware />} />
+                  {/* Admin Routes */}
+                  <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route path="/admin/dashboard" element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/admin/enquiries" element={
+                    <ProtectedRoute>
+                      <AdminEnquiries />
+                    </ProtectedRoute>
+                  } />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

@@ -409,6 +409,88 @@
     @apply absolute bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg border border-gray-200 dark:border-gray-700;
   }
 
+  /* Elegant Video Hero Styles */
+  .video-hero {
+    @apply relative min-h-screen flex items-center justify-center overflow-hidden;
+  }
+
+  .video-background {
+    @apply absolute inset-0 w-full h-full object-cover;
+  }
+
+  .video-overlay {
+    @apply absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70;
+  }
+
+  .video-overlay-top {
+    @apply absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent;
+  }
+
+  .elegant-content {
+    @apply relative z-20 text-center text-white;
+  }
+
+  .elegant-badge {
+    @apply inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3;
+  }
+
+  .elegant-heading {
+    @apply text-6xl md:text-8xl lg:text-9xl font-bold leading-tight;
+  }
+
+  .elegant-subheading {
+    @apply text-3xl md:text-4xl lg:text-5xl font-light opacity-90 tracking-wide;
+  }
+
+  .elegant-description {
+    @apply text-xl md:text-2xl lg:text-3xl opacity-95 leading-relaxed text-balance font-light;
+  }
+
+  .elegant-stats {
+    @apply grid grid-cols-3 gap-12 max-w-3xl mx-auto;
+  }
+
+  .elegant-stat-number {
+    @apply text-4xl md:text-5xl font-bold text-yellow-400;
+  }
+
+  .elegant-stat-label {
+    @apply text-sm opacity-80 tracking-wide uppercase;
+  }
+
+  .elegant-cta-primary {
+    @apply bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold px-10 py-5 rounded-full shadow-2xl hover:shadow-yellow-500/25 transition-all duration-300;
+  }
+
+  .elegant-cta-secondary {
+    @apply bg-white/10 backdrop-blur-md border-2 border-white/30 text-white font-semibold px-10 py-5 rounded-full hover:bg-white/20 hover:border-white/50 transition-all duration-300;
+  }
+
+  .video-controls {
+    @apply absolute top-8 right-8 z-30 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-all duration-300;
+  }
+
+  .elegant-scroll-indicator {
+    @apply absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white opacity-70 cursor-pointer z-30;
+  }
+
+  /* Fallback Background Animation */
+  .fallback-bg {
+    @apply absolute inset-0 bg-gradient-to-br from-steel-primary via-brand-navy to-steel-dark;
+    animation: subtle-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes subtle-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.95;
+      transform: scale(1.02);
+    }
+  }
+
   /* Background Pattern */
   .bg-pattern {
     background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.1) 1px, transparent 0);
