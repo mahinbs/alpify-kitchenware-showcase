@@ -70,7 +70,7 @@ const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
       initial="hidden"
       animate="visible"
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-16 lg:h-20",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-20 lg:h-24",
         isScrolled 
           ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg" 
           : "bg-transparent"
@@ -107,7 +107,7 @@ const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
                 key={item.name}
                 to={item.path}
                 className={cn(
-                  "nav-link relative group",
+                  "nav-link relative group py-2",
                   location.pathname === item.path
                     ? "text-steel-primary dark:text-white"
                     : "text-gray-700 dark:text-gray-300"

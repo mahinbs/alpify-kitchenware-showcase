@@ -92,20 +92,27 @@ const HeroSection = () => {
   return (
     <section 
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 lg:pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{ paddingTop: '6rem' }}
     >
-      {/* Hero Background with Parallax */}
-      <div className="absolute inset-0">
+      {/* Hero Background with Parallax - Fixed positioning */}
+      <div className="absolute inset-0 z-0">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-110"
-          style={{ backgroundImage: `url(${heroBackground})` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ 
+            backgroundImage: `url(${heroBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
         />
+        {/* Overlay gradients */}
         <div className="absolute inset-0 bg-gradient-to-br from-steel-primary/90 via-steel-primary/80 to-brand-navy/90" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Floating Elements - Behind content */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
         <motion.div
           animate={{ 
             y: [0, -20, 0],
@@ -146,8 +153,8 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-10 container-modern text-center text-white">
+      {/* Hero Content - Above background */}
+      <div className="relative z-20 container-modern text-center text-white px-4 sm:px-6 lg:px-8">
         <div ref={textRef} className="max-w-5xl mx-auto">
           {/* Badge */}
           <motion.div
@@ -236,10 +243,10 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - Above content */}
       <motion.div 
         ref={scrollIndicatorRef}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white opacity-70 cursor-pointer"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white opacity-70 cursor-pointer z-30"
         onClick={scrollToNext}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -260,8 +267,8 @@ const HeroSection = () => {
         </motion.div>
       </motion.div>
 
-      {/* Bottom Gradient Overlay */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      {/* Bottom Gradient Overlay - Above background, below content */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
     </section>
   );
 };

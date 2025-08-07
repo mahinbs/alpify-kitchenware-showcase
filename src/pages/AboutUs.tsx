@@ -12,7 +12,7 @@ const AboutUs = () => {
       <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
       {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-gradient-to-br from-steel-primary to-steel-accent text-white">
+      <section className="pt-24 pb-16 bg-gradient-to-br from-steel-primary to-steel-accent text-white">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">About Us</h1>
           <p className="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto">

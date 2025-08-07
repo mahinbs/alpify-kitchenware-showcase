@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Navigation from "@/components/Navigation";
-import HeroSection from "@/components/HeroSection";
+import ModernHeroSection from "@/components/ModernHeroSection";
 import ProductCategories from "@/components/ProductCategories";
 import AboutSection from "@/components/AboutSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
@@ -15,7 +15,7 @@ const Index = () => {
   return (
     <main className="min-h-screen">
       <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <HeroSection />
+      <ModernHeroSection />
       <div id="products">
         <ProductCategories />
       </div>
