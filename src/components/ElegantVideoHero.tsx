@@ -130,19 +130,19 @@ const ElegantVideoHero = () => {
           muted={isMuted}
           loop
           playsInline
-          poster="/video-poster.jpg"
+          autoPlay
         >
-          <source src="/hero-video.mp4" type="video/mp4" />
-          <source src="/hero-video.webm" type="video/webm" />
+          <source src="https://res.cloudinary.com/dknafpppp/video/upload/v1754597584/GettyImages-1316495330_1_remgng.mp4" type="video/mp4" />
           {/* Fallback background for browsers that don't support video */}
         </video>
         
         {/* Fallback Background - Shows when video fails to load */}
         <div className="fallback-bg" />
         
-        {/* Video Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+        {/* Video Overlay - Enhanced for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
       </div>
 
       {/* Floating Elements */}
@@ -203,43 +203,43 @@ const ElegantVideoHero = () => {
       {/* Main Content */}
       <div className="container-modern relative z-20 text-center text-white px-4 sm:px-6 lg:px-8">
         <div ref={textRef} className="max-w-6xl mx-auto">
-          {/* Elegant Badge */}
+          {/* Elegant Badge - Enhanced for better visibility */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 mb-8"
+            className="inline-flex items-center space-x-2 bg-black/40 backdrop-blur-md border border-white/30 rounded-full px-6 py-3 mb-8 shadow-lg"
           >
             <Sparkles className="w-5 h-5 text-yellow-400" />
-            <span className="text-sm font-medium tracking-wide">Premium Steel Kitchenware Export</span>
+            <span className="text-sm font-medium tracking-wide text-white drop-shadow-md">Premium Steel Kitchenware Export</span>
           </motion.div>
 
-          {/* Main Heading */}
+          {/* Main Heading - Enhanced for better visibility */}
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0, delay: 0.9 }}
-            className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight"
+            className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight drop-shadow-2xl"
           >
-            <span className="block bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent drop-shadow-lg">
               Alpify Global
             </span>
-            <span className="block text-3xl md:text-4xl lg:text-5xl font-light opacity-90 mt-6 font-sans tracking-wide">
+            <span className="block text-3xl md:text-4xl lg:text-5xl font-light mt-6 font-sans tracking-wide text-white drop-shadow-lg">
               Premium Kitchenware Export
             </span>
           </motion.h1>
 
-          {/* Elegant Description */}
+          {/* Elegant Description - Enhanced for better visibility */}
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0, delay: 1.1 }}
-            className="text-xl md:text-2xl lg:text-3xl mb-12 opacity-95 max-w-4xl mx-auto leading-relaxed text-balance font-light"
+            className="text-xl md:text-2xl lg:text-3xl mb-12 max-w-4xl mx-auto leading-relaxed text-balance font-light text-white drop-shadow-lg"
           >
             We are a trusted export company committed to delivering excellence in stainless steel kitchenware to markets worldwide.
           </motion.p>
 
-          {/* Elegant Stats */}
+          {/* Elegant Stats - Enhanced for better visibility */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -247,16 +247,16 @@ const ElegantVideoHero = () => {
             className="grid grid-cols-3 gap-12 max-w-3xl mx-auto mb-16"
           >
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold mb-3 text-yellow-400">25+</div>
-              <div className="text-sm opacity-80 tracking-wide uppercase">Years Experience</div>
+              <div className="text-4xl md:text-5xl font-bold mb-3 text-yellow-400 drop-shadow-lg">25+</div>
+              <div className="text-sm text-white tracking-wide uppercase drop-shadow-md">Years Experience</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold mb-3 text-yellow-400">50+</div>
-              <div className="text-sm opacity-80 tracking-wide uppercase">Countries</div>
+              <div className="text-4xl md:text-5xl font-bold mb-3 text-yellow-400 drop-shadow-lg">50+</div>
+              <div className="text-sm text-white tracking-wide uppercase drop-shadow-md">Countries</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold mb-3 text-yellow-400">100%</div>
-              <div className="text-sm opacity-80 tracking-wide uppercase">Quality Assured</div>
+              <div className="text-4xl md:text-5xl font-bold mb-3 text-yellow-400 drop-shadow-lg">100%</div>
+              <div className="text-sm text-white tracking-wide uppercase drop-shadow-md">Quality Assured</div>
             </div>
           </motion.div>
         </div>
