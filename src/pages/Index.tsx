@@ -8,26 +8,11 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
 import { DarkModeContext } from "@/App";
-
 const Index = () => {
-  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
-
-  return (
-    <main className="min-h-screen">
-      <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <HeroSection />
-      <div id="products">
-        <ProductCategories />
-      </div>
-      <div id="about">
-        <AboutSection />
-      </div>
-      <WhyChooseUs />
-      <ContactSection />
-      <Footer />
-      <StickyQuotationButton />
-    </main>
-  );
+  const {
+    darkMode,
+    toggleDarkMode
+  } = useContext(DarkModeContext);
+  return;
 };
-
 export default Index;
