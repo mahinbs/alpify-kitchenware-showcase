@@ -1,73 +1,107 @@
-# Welcome to your Lovable project
+# Alpify Global - Premium Kitchenware Showcase
 
-## Project info
+A modern, responsive website showcasing Alpify Global's premium stainless steel kitchenware export business.
 
-**URL**: https://lovable.dev/projects/db1ec64c-161c-49aa-ad48-fedbfa0f6bcf
+## 🏢 About Alpify Global
 
-## How can I edit this code?
+Alpify Global is a leading exporter of premium stainless steel kitchenware with IEC certification. With over 25 years of experience, we serve 50+ countries worldwide, delivering excellence in cookware, dinnerware, drinkware, serveware, storage, and tableware.
 
-There are several ways of editing your application.
+## 🚀 Features
 
-**Use Lovable**
+- **Modern Design**: Clean, professional interface with dark/light mode support
+- **Responsive Layout**: Optimized for all devices and screen sizes
+- **Product Showcase**: Comprehensive catalog of kitchenware products
+- **Admin Panel**: Full CRUD functionality for product management
+- **Contact Management**: Customer enquiry system with admin interface
+- **Interactive Map**: Office location with directions
+- **Certificate Display**: IEC certification showcase
+- **SEO Optimized**: Meta tags, Open Graph, and structured data
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/db1ec64c-161c-49aa-ad48-fedbfa0f6bcf) and start prompting.
+## 🛠️ Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Animations**: Framer Motion and GSAP
+- **Routing**: React Router v6
+- **Build Tool**: Vite
+- **Icons**: Lucide React
+- **Forms**: React Hook Form with Zod validation
 
-**Use your preferred IDE**
+## 📦 Installation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# Clone the repository
+git clone https://github.com/mahinbs/alpify-kitchenware-showcase.git
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Navigate to the project directory
+cd alpify-kitchenware-showcase
 
-Follow these steps:
+# Install dependencies
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 🏃‍♂️ Development
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Start development server
+npm run dev
 
-**Use GitHub Codespaces**
+# Build for production
+npm run build
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Preview production build
+npm run preview
 
-## What technologies are used for this project?
+# Run linting
+npm run lint
+```
 
-This project is built with:
+## 📱 Pages & Features
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Public Pages
+- **Home**: Hero section, product categories, about section
+- **About Us**: Company information and values
+- **Services**: Product categories overview
+- **Contact Us**: Contact form and office location
+- **Certificate**: IEC certification display
+- **Product Pages**: Individual category pages (Cookware, Dinnerware, etc.)
 
-## How can I deploy this project?
+### Admin Panel
+- **Login**: Secure admin authentication
+- **Dashboard**: Product management with CRUD operations
+- **Enquiries**: Customer enquiry management system
 
-Simply open [Lovable](https://lovable.dev/projects/db1ec64c-161c-49aa-ad48-fedbfa0f6bcf) and click on Share -> Publish.
+## 🎨 Design System
 
-## Can I connect a custom domain to my Lovable project?
+- **Colors**: Custom steel-themed color palette
+- **Typography**: Modern, readable fonts
+- **Components**: Reusable UI components with shadcn/ui
+- **Animations**: Smooth transitions and micro-interactions
+- **Accessibility**: WCAG compliant design
 
-Yes, you can!
+## 📞 Contact Information
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- **Address**: UNIT 101, Oxford Towers, 139, HAL Old Airport Rd, north, HAL 2nd Stage, Kodihalli, Bengaluru, Karnataka 560008
+- **Phone**: +91 9886317956
+- **Email**: info@alpifyglobal.com
+- **Business Hours**: Monday - Friday: 10:00 AM - 6:00 PM
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🌐 Deployment
+
+The application is optimized for deployment on various platforms:
+
+- **Vercel**: Zero-config deployment
+- **Netlify**: Static site hosting
+- **GitHub Pages**: Free hosting for public repositories
+- **Custom Domain**: Easy domain configuration
+
+## 📄 License
+
+This project is private and proprietary to Alpify Global.
+
+## 🤝 Contributing
+
+This is a private project for Alpify Global. For business inquiries, please contact info@alpifyglobal.com.

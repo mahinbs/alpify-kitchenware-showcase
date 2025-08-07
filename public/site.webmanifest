@@ -1,0 +1,21 @@
+{
+  "name": "Alpify Global - Premium Kitchenware Export",
+  "short_name": "Alpify Global",
+  "description": "Leading exporter of premium stainless steel kitchenware with IEC certification",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f2937",
+  "theme_color": "#374151",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 
