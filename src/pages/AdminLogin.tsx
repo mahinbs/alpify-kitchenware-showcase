@@ -125,10 +125,7 @@ const AdminLogin = () => {
             <div className="mt-8 p-4 bg-muted/30 rounded-lg border border-border">
               <h3 className="text-sm font-semibold text-foreground mb-2">
             </h3>
-              <div className="text-xs text-muted-foreground space-y-1">
-                <p><strong>Username:</strong> admin</p>
-                <p><strong>Password:</strong> alpify2024</p>
-              </div>
+              
             </div>
           </div>
         </motion.div>
