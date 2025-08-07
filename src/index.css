@@ -23,6 +23,20 @@
     --brand-blue: 220 60% 45%;
     --brand-light: 220 45% 95%;
     
+    /* Vibrant Accent Colors */
+    --electric-blue: 195 100% 50%;
+    --vibrant-orange: 25 100% 60%;
+    --emerald-green: 160 100% 45%;
+    --hot-pink: 330 100% 65%;
+    --golden-yellow: 45 100% 55%;
+    --neon-purple: 280 100% 70%;
+    
+    /* Dynamic Gradients */
+    --gradient-electric: linear-gradient(135deg, hsl(var(--electric-blue)) 0%, hsl(var(--neon-purple)) 100%);
+    --gradient-fire: linear-gradient(135deg, hsl(var(--vibrant-orange)) 0%, hsl(var(--hot-pink)) 100%);
+    --gradient-nature: linear-gradient(135deg, hsl(var(--emerald-green)) 0%, hsl(var(--golden-yellow)) 100%);
+    --gradient-aurora: linear-gradient(135deg, hsl(var(--electric-blue)) 0%, hsl(var(--emerald-green)) 50%, hsl(var(--hot-pink)) 100%);
+    
     /* UI Components */
     --card: 0 0% 100%;
     --card-foreground: 220 15% 15%;
@@ -50,10 +64,14 @@
     --ring: 220 60% 45%;
     
     /* Modern Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--steel-primary)) 0%, hsl(var(--brand-navy)) 100%);
+    --gradient-hero: var(--gradient-aurora);
     --gradient-steel: linear-gradient(180deg, hsl(var(--steel-light)) 0%, hsl(var(--background)) 100%);
-    --gradient-brand: linear-gradient(135deg, hsl(var(--brand-blue)) 0%, hsl(var(--accent)) 100%);
+    --gradient-brand: var(--gradient-electric);
     --gradient-metallic: linear-gradient(45deg, hsl(var(--steel-primary)) 0%, hsl(var(--metallic)) 50%, hsl(var(--steel-accent)) 100%);
+    --gradient-animated: linear-gradient(45deg, hsl(var(--electric-blue)), hsl(var(--vibrant-orange)), hsl(var(--emerald-green)), hsl(var(--hot-pink)));
+    --gradient-mesh: radial-gradient(ellipse at top, hsl(var(--electric-blue) / 0.3) 0%, transparent 70%), 
+                     radial-gradient(ellipse at bottom, hsl(var(--vibrant-orange) / 0.3) 0%, transparent 70%),
+                     radial-gradient(ellipse at left, hsl(var(--emerald-green) / 0.3) 0%, transparent 70%);
     
     /* Modern Shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -69,6 +87,8 @@
     --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-elastic: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
     
     --radius: 0.75rem;
     --radius-lg: 1rem;
@@ -118,8 +138,11 @@
     --ring: 220 15% 65%;
     
     /* Dark mode gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--steel-dark)) 0%, hsl(var(--brand-navy)) 100%);
+    --gradient-hero: var(--gradient-aurora);
     --gradient-steel: linear-gradient(180deg, hsl(var(--steel-dark)) 0%, hsl(var(--background)) 100%);
+    --gradient-mesh: radial-gradient(ellipse at top, hsl(var(--electric-blue) / 0.2) 0%, transparent 70%), 
+                     radial-gradient(ellipse at bottom, hsl(var(--vibrant-orange) / 0.2) 0%, transparent 70%),
+                     radial-gradient(ellipse at left, hsl(var(--emerald-green) / 0.2) 0%, transparent 70%);
   }
 }
 
@@ -408,6 +431,59 @@
   .delay-800 { animation-delay: 800ms; }
   .delay-900 { animation-delay: 900ms; }
   .delay-1000 { animation-delay: 1000ms; }
+
+  /* Vibrant Animation Classes */
+  .animate-pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-morph {
+    animation: morph 8s ease-in-out infinite;
+  }
+
+  .animate-gradient-shift {
+    animation: gradient-shift 3s ease infinite;
+    background-size: 400% 400%;
+  }
+
+  .animate-magnetic {
+    transition: var(--transition-elastic);
+  }
+
+  .animate-magnetic:hover {
+    transform: scale(1.05) translateY(-2px);
+  }
+
+  .animate-text-glow {
+    animation: text-glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--electric-blue) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--electric-blue) / 0.6), 0 0 60px hsl(var(--hot-pink) / 0.3);
+    }
+  }
+
+  @keyframes morph {
+    0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+    50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+    75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+  }
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes text-glow {
+    0% { text-shadow: 0 0 10px hsl(var(--electric-blue) / 0.5); }
+    100% { text-shadow: 0 0 20px hsl(var(--electric-blue) / 0.8), 0 0 30px hsl(var(--hot-pink) / 0.5); }
+  }
 }
 
 @layer utilities {

@@ -65,6 +65,14 @@ export default {
 					light: 'hsl(var(--brand-light))',
 				},
 				metallic: 'hsl(var(--metallic))',
+				
+				// Vibrant Colors
+				electric: 'hsl(var(--electric-blue))',
+				vibrant: 'hsl(var(--vibrant-orange))',
+				emerald: 'hsl(var(--emerald-green))',
+				pink: 'hsl(var(--hot-pink))',
+				golden: 'hsl(var(--golden-yellow))',
+				neon: 'hsl(var(--neon-purple))',
 			},
 			fontFamily: {
 				sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
@@ -96,6 +104,12 @@ export default {
 				'float': 'float 6s ease-in-out infinite',
 				'glow': 'glow 2s ease-in-out infinite alternate',
 				'shimmer': 'shimmer 2s linear infinite',
+				'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+				'morph': 'morph 8s ease-in-out infinite',
+				'gradient-shift': 'gradientShift 3s ease infinite',
+				'magnetic': 'magnetic 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+				'text-glow': 'textGlow 2s ease-in-out infinite alternate',
+				'particle-float': 'particleFloat 6s ease-in-out infinite',
 			},
 			keyframes: {
 				fadeIn: {
@@ -133,6 +147,34 @@ export default {
 				shimmer: {
 					'0%': { transform: 'translateX(-100%)' },
 					'100%': { transform: 'translateX(100%)' },
+				},
+				pulseGlow: {
+					'0%, 100%': { boxShadow: '0 0 20px hsl(195 100% 50% / 0.3)' },
+					'50%': { boxShadow: '0 0 40px hsl(195 100% 50% / 0.6), 0 0 60px hsl(330 100% 65% / 0.3)' },
+				},
+				morph: {
+					'0%, 100%': { borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' },
+					'25%': { borderRadius: '58% 42% 75% 25% / 76% 46% 54% 24%' },
+					'50%': { borderRadius: '50% 50% 33% 67% / 55% 27% 73% 45%' },
+					'75%': { borderRadius: '33% 67% 58% 42% / 63% 68% 32% 37%' },
+				},
+				gradientShift: {
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' },
+				},
+				magnetic: {
+					'0%': { transform: 'scale(1) translateY(0)' },
+					'100%': { transform: 'scale(1.05) translateY(-2px)' },
+				},
+				textGlow: {
+					'0%': { textShadow: '0 0 10px hsl(195 100% 50% / 0.5)' },
+					'100%': { textShadow: '0 0 20px hsl(195 100% 50% / 0.8), 0 0 30px hsl(330 100% 65% / 0.5)' },
+				},
+				particleFloat: {
+					'0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+					'33%': { transform: 'translateY(-20px) rotate(120deg)' },
+					'66%': { transform: 'translateY(10px) rotate(240deg)' },
 				},
 			},
 			transitionDuration: {
