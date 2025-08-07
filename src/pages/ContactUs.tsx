@@ -486,43 +486,59 @@ const ContactUs = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="aspect-video bg-gradient-to-br from-steel-light/20 to-steel-light/5 rounded-lg flex items-center justify-center relative overflow-hidden">
-              {/* Animated Background Pattern */}
-              <motion.div
-                className="absolute inset-0 opacity-10"
-                animate={{
-                  background: [
-                    "radial-gradient(circle at 20% 20%, hsl(var(--vibrant-orange)) 0%, transparent 50%)",
-                    "radial-gradient(circle at 80% 80%, hsl(var(--electric-blue)) 0%, transparent 50%)",
-                    "radial-gradient(circle at 50% 50%, hsl(var(--emerald-green)) 0%, transparent 50%)",
-                    "radial-gradient(circle at 20% 20%, hsl(var(--vibrant-orange)) 0%, transparent 50%)"
-                  ]
-                }}
-                transition={{ duration: 8, repeat: Infinity }}
-              />
+            <div className="aspect-video bg-gradient-to-br from-steel-light/20 to-steel-light/5 rounded-lg relative overflow-hidden">
+              {/* Interactive Map with Static Image and Overlay */}
+              <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-lg relative">
+                {/* Map Placeholder with Location Pin */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.div 
+                    className="text-6xl mb-4"
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    📍
+                  </motion.div>
+                </div>
+                
+                {/* Location Marker */}
+                <motion.div
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-red-500 rounded-full border-4 border-white shadow-lg"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                
+                {/* Map Grid Pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="w-full h-full" style={{
+                    backgroundImage: `
+                      linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
+                    `,
+                    backgroundSize: '20px 20px'
+                  }} />
+                </div>
+              </div>
               
-              <div className="text-center z-10">
-                <motion.div 
-                  className="text-8xl mb-6"
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                >
-                  🗺️
-                </motion.div>
-                <h3 className="text-2xl font-bold text-primary mb-4">Interactive Map Coming Soon</h3>
-                <p className="text-muted-foreground mb-2 font-medium">
-                  UNIT 101, Oxford Towers, HAL Old Airport Road
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Bengaluru, Karnataka 560008
-                </p>
-                <motion.button
-                  className="mt-6 px-6 py-3 bg-gradient-to-r from-primary to-electric-blue text-white rounded-lg font-medium hover:shadow-glow transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Get Directions
-                </motion.button>
+              {/* Overlay with Address Info */}
+              <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-sm rounded-lg p-4 text-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold mb-1">Alpify Global</h3>
+                    <p className="text-sm opacity-90">
+                      UNIT 101, Oxford Towers, 139, HAL Old Airport Rd, north, HAL 2nd Stage, Kodihalli, Bengaluru, Karnataka 560008
+                    </p>
+                  </div>
+                  <motion.a
+                    href="https://maps.google.com/maps?q=Oxford+Towers,+139,+HAL+Old+Airport+Rd,+north,+HAL+2nd+Stage,+Kodihalli,+Bengaluru,+Karnataka+560008"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-gradient-to-r from-primary to-electric-blue text-white rounded-lg font-medium hover:shadow-glow transition-all duration-300 text-sm"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Get Directions
+                  </motion.a>
+                </div>
               </div>
             </div>
           </motion.div>
