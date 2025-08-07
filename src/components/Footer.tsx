@@ -83,8 +83,8 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <div className="space-y-2 text-steel-light">
               <p>info@alpifyglobal.com</p>
-              <p>+1 (555) 123-4567</p>
-              <p>123 Export Avenue<br />Trade City, TC 12345</p>
+              <p>+91 9886317956</p>
+              <p>UNIT 101, Oxford Towers, 139, HAL Old Airport Rd, north, HAL 2nd Stage, Kodihalli, Bengaluru, Karnataka 560008</p>
             </div>
           </div>
         </div>
