@@ -115,6 +115,14 @@ export const useBlogs = (category?: string) => {
           ];
           localStorage.setItem("adminBlogs", JSON.stringify(sampleBlogs));
           console.log('Sample blogs saved to localStorage');
+          console.log('Sample blogs structure:', sampleBlogs.map(blog => ({
+            id: blog.id,
+            title: blog.title,
+            isPublished: blog.isPublished,
+            hasImage: !!blog.image,
+            hasReadTime: typeof blog.readTime === 'number',
+            hasViews: typeof blog.views === 'number'
+          })));
           
           if (category) {
             const filteredBlogs = sampleBlogs.filter((blog: Blog) =>

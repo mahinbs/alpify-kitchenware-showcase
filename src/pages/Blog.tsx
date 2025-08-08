@@ -24,6 +24,16 @@ const BlogPage = () => {
     console.log('Blogs loaded:', blogs);
     console.log('Published blogs:', blogs.filter(blog => blog.isPublished));
     console.log('Loading state:', loading);
+    console.log('Blogs length:', blogs.length);
+    console.log('Blogs structure check:', blogs.map(blog => ({
+      id: blog.id,
+      title: blog.title,
+      hasImage: !!blog.image,
+      hasPublishedAt: !!blog.publishedAt,
+      hasReadTime: typeof blog.readTime === 'number',
+      hasViews: typeof blog.views === 'number',
+      isPublished: blog.isPublished
+    })));
     
     let filtered = blogs.filter(blog => blog.isPublished);
     
@@ -186,12 +196,31 @@ const BlogPage = () => {
               <p className="text-muted-foreground">Loading articles...</p>
             </motion.div>
           ) : (filteredBlogs.length > 0 || blogs.length > 0) ? (
-            <motion.div 
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
+            <>
+              {/* Test Section - Show all blogs without filtering */}
+              <div className="mb-8 p-4 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+                <h3 className="text-lg font-bold mb-4">Test Section - All Blogs (No Filtering):</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {blogs.map((blog, index) => (
+                    <div key={blog.id || index} className="bg-white dark:bg-gray-800 p-4 rounded border">
+                      <h4 className="font-bold">{blog.title || 'No Title'}</h4>
+                      <p className="text-sm text-gray-600">ID: {blog.id}</p>
+                      <p className="text-sm text-gray-600">Published: {blog.isPublished ? 'Yes' : 'No'}</p>
+                      <p className="text-sm text-gray-600">Has Image: {blog.image ? 'Yes' : 'No'}</p>
+                      <p className="text-sm text-gray-600">Read Time: {blog.readTime || 'N/A'}</p>
+                      <p className="text-sm text-gray-600">Views: {blog.views || 'N/A'}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Original Blog Section */}
+              <motion.div 
+                className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
               {(filteredBlogs.length > 0 ? filteredBlogs : blogs).filter(blog => 
                 blog && 
                 blog.id && 
@@ -292,7 +321,8 @@ const BlogPage = () => {
                   </div>
                 </motion.article>
               ))}
-            </motion.div>
+              </motion.div>
+            </>
           ) : (
             <motion.div
               initial={{ opacity: 0 }}
