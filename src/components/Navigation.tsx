@@ -29,6 +29,7 @@ const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
     { name: "About Us", path: "/about" },
     { name: "Certificate", path: "/certificate" },
     { name: "Services", path: "/services" },
+    { name: "Blog", path: "/blog" },
     { name: "Contact Us", path: "/contact" },
   ];
 

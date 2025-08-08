@@ -15,7 +15,8 @@ import {
   X,
   Save,
   Loader2,
-  Mail
+  Mail,
+  FileText
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -777,6 +778,17 @@ const AdminDashboard = () => {
               >
                 <Mail className="w-5 h-5" />
                 <span>Customer Enquiries</span>
+              </motion.button>
+
+              {/* Blog Management Button */}
+              <motion.button
+                onClick={() => navigate("/admin/blogs")}
+                className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:shadow-glow transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FileText className="w-5 h-5" />
+                <span>Blog Management</span>
               </motion.button>
 
               {/* Add Product Button */}

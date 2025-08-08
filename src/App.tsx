@@ -20,6 +20,8 @@ import Tableware from "./pages/Tableware";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminEnquiries from "./pages/AdminEnquiries";
+import AdminBlogs from "./pages/AdminBlogs";
+import BlogPage from "./pages/Blog";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -126,6 +128,7 @@ const App = () => {
                   <Route path="/certificate" element={<Certificate />} />
                   <Route path="/services" element={<Services />} />
                   <Route path="/contact" element={<ContactUs />} />
+                  <Route path="/blog" element={<BlogPage />} />
                   <Route path="/cookware" element={<Cookware />} />
                   <Route path="/dinnerware" element={<Dinnerware />} />
                   <Route path="/drinkware" element={<Drinkware />} />
@@ -142,6 +145,11 @@ const App = () => {
                   <Route path="/admin/enquiries" element={
                     <ProtectedRoute>
                       <AdminEnquiries />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/admin/blogs" element={
+                    <ProtectedRoute>
+                      <AdminBlogs />
                     </ProtectedRoute>
                   } />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
