@@ -32,6 +32,27 @@ export const useBlogs = (category?: string) => {
           console.log('Parsed all blogs:', allBlogs);
           console.log('Number of blogs:', allBlogs.length);
           
+          // Check if blogs have proper structure
+          const hasValidStructure = allBlogs.every((blog: Blog) => 
+            blog && 
+            blog.id && 
+            blog.title && 
+            blog.excerpt && 
+            blog.author && 
+            blog.category && 
+            blog.image && 
+            blog.publishedAt && 
+            blog.readTime !== undefined && 
+            blog.views !== undefined &&
+            blog.title !== "jgvygcfhjcfu" // Check for placeholder title
+          );
+          
+          if (!hasValidStructure) {
+            console.log('Detected corrupted blog data, reinitializing...');
+            localStorage.removeItem('adminBlogs');
+            throw new Error('Corrupted data detected');
+          }
+          
           if (category) {
             const filteredBlogs = allBlogs.filter((blog: Blog) =>
               blog.category.toLowerCase() === category.toLowerCase()
