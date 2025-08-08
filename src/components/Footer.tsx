@@ -1,15 +1,13 @@
-import { Link } from "react-router-dom"
-
+import { Link } from "react-router-dom";
 const Footer = () => {
-  const currentYear = new Date().getFullYear()
-
+  const currentYear = new Date().getFullYear();
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId)
-    section?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  return (
-    <footer className="bg-steel-primary text-white py-12 px-6">
+    const section = document.getElementById(sectionId);
+    section?.scrollIntoView({
+      behavior: 'smooth'
+    });
+  };
+  return <footer className="bg-steel-primary text-white py-12 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -17,11 +15,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-12 h-12 rounded-lg overflow-hidden shadow-lg">
-                <img 
-                  src="https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png"
-                  alt="Alpify Global Logo"
-                  className="w-full h-full object-cover"
-                />
+                <img src="https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png" alt="Alpify Global Logo" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-2xl font-bold">Alpify Global</h3>
             </div>
@@ -36,42 +30,27 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <button 
-                  onClick={() => scrollToSection('about')}
-                  className="text-steel-light hover:text-white transition-colors duration-300"
-                >
+                <button onClick={() => scrollToSection('about')} className="text-steel-light hover:text-white transition-colors duration-300">
                   About
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection('products')}
-                  className="text-steel-light hover:text-white transition-colors duration-300"
-                >
+                <button onClick={() => scrollToSection('products')} className="text-steel-light hover:text-white transition-colors duration-300">
                   Products
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection('contact')}
-                  className="text-steel-light hover:text-white transition-colors duration-300"
-                >
+                <button onClick={() => scrollToSection('contact')} className="text-steel-light hover:text-white transition-colors duration-300">
                   Contact
                 </button>
               </li>
               <li>
-                <a 
-                  href="#"
-                  className="text-steel-light hover:text-white transition-colors duration-300"
-                >
+                <a href="#" className="text-steel-light hover:text-white transition-colors duration-300">
                   Terms
                 </a>
               </li>
               <li>
-                <Link 
-                  to="/certificate"
-                  className="text-steel-light hover:text-white transition-colors duration-300"
-                >
+                <Link to="/certificate" className="text-steel-light hover:text-white transition-colors duration-300">
                   Certificate
                 </Link>
               </li>
@@ -82,7 +61,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <div className="space-y-2 text-steel-light">
-              <p>info@alpifyglobal.com</p>
+              <p> jatin@alpify.in deepak@alpify.in</p>
               <p>+91 9886317956</p>
               <p>UNIT 101, Oxford Towers, 139, HAL Old Airport Rd, north, HAL 2nd Stage, Kodihalli, Bengaluru, Karnataka 560008</p>
             </div>
@@ -96,30 +75,19 @@ const Footer = () => {
               © {currentYear} Alpify Global. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a 
-                href="#" 
-                className="text-steel-light hover:text-white transition-colors duration-300 text-sm"
-              >
+              <a href="#" className="text-steel-light hover:text-white transition-colors duration-300 text-sm">
                 Privacy Policy
               </a>
-              <a 
-                href="#" 
-                className="text-steel-light hover:text-white transition-colors duration-300 text-sm"
-              >
+              <a href="#" className="text-steel-light hover:text-white transition-colors duration-300 text-sm">
                 Terms of Service
               </a>
-              <Link 
-                to="/admin/login" 
-                className="text-steel-light hover:text-white transition-colors duration-300 text-sm"
-              >
+              <Link to="/admin/login" className="text-steel-light hover:text-white transition-colors duration-300 text-sm">
                 Admin
               </Link>
             </div>
           </div>
         </div>
       </div>
-    </footer>
-  )
-}
-
-export default Footer
+    </footer>;
+};
+export default Footer;
