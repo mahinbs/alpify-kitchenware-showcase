@@ -22,19 +22,28 @@ export const useBlogs = (category?: string) => {
 
   useEffect(() => {
     const loadBlogs = () => {
+      console.log('=== useBlogs Hook Debug ===');
       try {
         const storedBlogs = localStorage.getItem('adminBlogs');
+        console.log('Raw stored blogs:', storedBlogs);
+        
         if (storedBlogs) {
           const allBlogs = JSON.parse(storedBlogs);
+          console.log('Parsed all blogs:', allBlogs);
+          console.log('Number of blogs:', allBlogs.length);
+          
           if (category) {
             const filteredBlogs = allBlogs.filter((blog: Blog) =>
               blog.category.toLowerCase() === category.toLowerCase()
             );
+            console.log('Category filtered blogs:', filteredBlogs);
             setBlogs(filteredBlogs);
           } else {
+            console.log('Setting all blogs:', allBlogs);
             setBlogs(allBlogs);
           }
         } else {
+          console.log('No blogs in localStorage, initializing sample blogs...');
           // Initialize with sample blogs if none exist
           const sampleBlogs: Blog[] = [
             {
@@ -69,13 +78,16 @@ export const useBlogs = (category?: string) => {
             }
           ];
           localStorage.setItem("adminBlogs", JSON.stringify(sampleBlogs));
+          console.log('Sample blogs saved to localStorage');
           
           if (category) {
             const filteredBlogs = sampleBlogs.filter((blog: Blog) =>
               blog.category.toLowerCase() === category.toLowerCase()
             );
+            console.log('Category filtered sample blogs:', filteredBlogs);
             setBlogs(filteredBlogs);
           } else {
+            console.log('Setting sample blogs:', sampleBlogs);
             setBlogs(sampleBlogs);
           }
         }
@@ -83,6 +95,7 @@ export const useBlogs = (category?: string) => {
         console.error('Error loading blogs:', error);
         setBlogs([]);
       } finally {
+        console.log('Setting loading to false');
         setLoading(false);
       }
     };
