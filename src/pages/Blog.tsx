@@ -144,18 +144,7 @@ const BlogPage = () => {
                 initial="hidden"
                 animate="visible"
               >
-              {(filteredBlogs.length > 0 ? filteredBlogs : blogs).filter(blog => 
-                blog && 
-                blog.id && 
-                blog.title && 
-                blog.excerpt && 
-                blog.author && 
-                blog.category && 
-                blog.image && 
-                blog.publishedAt && 
-                blog.readTime !== undefined && 
-                blog.views !== undefined
-              ).map((blog, index) => (
+              {(filteredBlogs.length > 0 ? filteredBlogs : blogs).map((blog, index) => (
                 <motion.article
                   key={blog.id}
                   variants={itemVariants}
@@ -177,11 +166,11 @@ const BlogPage = () => {
                     <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center space-x-1">
                         <Calendar className="w-4 h-4" />
-                        <span>{new Date(blog.publishedAt).toLocaleDateString()}</span>
+                        <span>{blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString() : 'No date'}</span>
                       </div>
                       <div className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
-                        <span>{blog.readTime} min read</span>
+                        <span>{blog.readTime || 5} min read</span>
                       </div>
                     </div>
 
@@ -210,12 +199,12 @@ const BlogPage = () => {
                       </div>
                       <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                         <TrendingUp className="w-4 h-4" />
-                        <span>{blog.views} views</span>
+                        <span>{blog.views || 0} views</span>
                       </div>
                     </div>
 
                     {/* Tags */}
-                    {blog.tags.length > 0 && (
+                    {blog.tags && blog.tags.length > 0 && (
                       <div className="flex items-center space-x-2 mb-6">
                         <Tag className="w-4 h-4 text-muted-foreground" />
                         <div className="flex flex-wrap gap-1">
