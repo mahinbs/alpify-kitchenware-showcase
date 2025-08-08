@@ -41,26 +41,38 @@ const BlogPage = () => {
 
   const categories = ["Industry Insights", "Buying Guide", "Recipes", "Company News", "Tips & Tricks"];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+  // GSAP animation for blog items
+  useEffect(() => {
+    if (!loading && blogs.length > 0) {
+      const blogItems = document.querySelectorAll('.blog-item');
+      
+      blogItems.forEach((item, index) => {
+        gsap.fromTo(item, 
+          {
+            opacity: 0,
+            y: 50
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: index * 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      });
     }
-  };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, [loading, blogs, filteredBlogs]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
@@ -137,19 +149,13 @@ const BlogPage = () => {
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
               <p className="text-muted-foreground">Loading articles...</p>
             </motion.div>
-          ) : (filteredBlogs.length > 0 || blogs.length > 0) ? (
-            <motion.div 
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-              {(filteredBlogs.length > 0 ? filteredBlogs : blogs).map((blog, index) => (
-                <motion.article
-                  key={blog.id}
-                  variants={itemVariants}
-                  className="bg-card border border-border rounded-2xl overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-500 group"
-                >
+                     ) : blogs.length > 0 ? (
+             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+               {filteredBlogs.map((blog, index) => (
+                 <article
+                   key={blog.id}
+                   className="blog-item bg-card border border-border rounded-2xl overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-500 group"
+                 >
                   {/* Blog Image */}
                   <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 relative overflow-hidden">
                     <img 
@@ -231,12 +237,12 @@ const BlogPage = () => {
                       >
                         Read Article
                       </motion.button>
-                    </Link>
-                  </div>
-                </motion.article>
-              ))}
-            </motion.div>
-          ) : (
+                                         </Link>
+                   </div>
+                 </article>
+               ))}
+             </div>
+          ) : blogs.length === 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -247,26 +253,35 @@ const BlogPage = () => {
               </div>
               <h3 className="text-2xl font-bold text-primary mb-4">No articles found</h3>
               <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                {searchTerm || categoryFilter !== "all" 
-                  ? "Try adjusting your search or filter criteria to find what you're looking for."
-                  : "We're working on creating amazing content for you. Check back soon!"
-                }
+                We're working on creating amazing content for you. Check back soon!
               </p>
-              {(searchTerm || categoryFilter !== "all") && (
-                <motion.button
-                  onClick={() => {
-                    setSearchTerm("");
-                    setCategoryFilter("all");
-                  }}
-                  className="px-6 py-3 bg-gradient-to-r from-primary to-vibrant-orange text-white rounded-lg font-semibold hover:shadow-glow transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Clear Filters
-                </motion.button>
-              )}
             </motion.div>
-          )}
+          ) : filteredBlogs.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
+            >
+              <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search className="w-12 h-12 text-muted-foreground" />
+              </div>
+              <h3 className="text-2xl font-bold text-primary mb-4">No articles found</h3>
+              <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+                Try adjusting your search or filter criteria to find what you're looking for.
+              </p>
+              <motion.button
+                onClick={() => {
+                  setSearchTerm("");
+                  setCategoryFilter("all");
+                }}
+                className="px-6 py-3 bg-gradient-to-r from-primary to-vibrant-orange text-white rounded-lg font-semibold hover:shadow-glow transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Clear Filters
+              </motion.button>
+            </motion.div>
+          ) : null}
         </div>
       </section>
 

@@ -138,7 +138,7 @@ const BlogDetail = () => {
       </section>
 
       {/* Blog Content */}
-      <section className="py-20 bg-background relative">
+      <section className="pb-20 bg-background relative">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
