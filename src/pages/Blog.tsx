@@ -21,6 +21,9 @@ const BlogPage = () => {
 
   // Filter blogs based on search and category
   useEffect(() => {
+    console.log('Blogs loaded:', blogs);
+    console.log('Published blogs:', blogs.filter(blog => blog.isPublished));
+    
     let filtered = blogs.filter(blog => blog.isPublished);
     
     if (searchTerm) {
@@ -36,6 +39,7 @@ const BlogPage = () => {
       filtered = filtered.filter(blog => blog.category === categoryFilter);
     }
     
+    console.log('Filtered blogs:', filtered);
     setFilteredBlogs(filtered);
   }, [blogs, searchTerm, categoryFilter]);
 
