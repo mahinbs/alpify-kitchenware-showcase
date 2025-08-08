@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import { DarkModeContext } from "@/App";
 import { useBlogs, Blog } from "@/hooks/use-blogs";
 
@@ -319,6 +320,7 @@ const BlogPage = () => {
       </section>
 
       <StickyQuotationButton />
+      <FloatingWhatsAppButton />
       <Footer />
     </div>
   );

@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import { DarkModeContext } from "@/App";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -497,6 +498,7 @@ const AboutUs = () => {
 
       <Footer />
       <StickyQuotationButton />
+      <FloatingWhatsAppButton />
     </div>
   );
 };

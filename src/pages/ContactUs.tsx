@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -665,6 +666,7 @@ const ContactUs = () => {
 
       <Footer />
       <StickyQuotationButton />
+      <FloatingWhatsAppButton />
     </div>
   );
 };

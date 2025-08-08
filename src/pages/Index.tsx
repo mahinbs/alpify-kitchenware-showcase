@@ -7,6 +7,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import { DarkModeContext } from "@/App";
 
 const Index = () => {
@@ -26,6 +27,7 @@ const Index = () => {
       <ContactSection />
       <Footer />
       <StickyQuotationButton />
+      <FloatingWhatsAppButton />
     </main>
   );
 };

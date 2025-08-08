@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import { DarkModeContext } from "@/App";
 
 // Import images for the 6 product categories
@@ -548,6 +549,7 @@ const Services = () => {
 
       <Footer />
       <StickyQuotationButton />
+      <FloatingWhatsAppButton />
     </div>
   );
 };
