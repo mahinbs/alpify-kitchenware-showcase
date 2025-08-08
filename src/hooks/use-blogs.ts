@@ -75,6 +75,21 @@ export const useBlogs = (category?: string) => {
               isPublished: true,
               readTime: 8,
               views: 890
+            },
+            {
+              id: "3",
+              title: "Professional Kitchen Equipment Guide",
+              content: "Professional kitchens require equipment that can withstand heavy use, high temperatures, and rigorous cleaning protocols. This guide covers the essential equipment every professional kitchen needs, from commercial-grade cookware to specialized tools...",
+              excerpt: "Essential equipment and tools for professional kitchens, from commercial cookware to specialized utensils.",
+              author: "Chef's Corner",
+              category: "Professional Guide",
+              tags: ["professional", "equipment", "commercial", "kitchen tools"],
+              image: "https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png",
+              publishedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+              updatedAt: new Date().toISOString(),
+              isPublished: true,
+              readTime: 6,
+              views: 567
             }
           ];
           localStorage.setItem("adminBlogs", JSON.stringify(sampleBlogs));

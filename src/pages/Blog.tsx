@@ -180,7 +180,18 @@ const BlogPage = () => {
               initial="hidden"
               animate="visible"
             >
-              {(filteredBlogs.length > 0 ? filteredBlogs : blogs).map((blog, index) => (
+              {(filteredBlogs.length > 0 ? filteredBlogs : blogs).filter(blog => 
+                blog && 
+                blog.id && 
+                blog.title && 
+                blog.excerpt && 
+                blog.author && 
+                blog.category && 
+                blog.image && 
+                blog.publishedAt && 
+                blog.readTime !== undefined && 
+                blog.views !== undefined
+              ).map((blog, index) => (
                 <motion.article
                   key={blog.id}
                   variants={itemVariants}
