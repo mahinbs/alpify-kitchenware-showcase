@@ -23,6 +23,7 @@ const BlogPage = () => {
   useEffect(() => {
     console.log('Blogs loaded:', blogs);
     console.log('Published blogs:', blogs.filter(blog => blog.isPublished));
+    console.log('Loading state:', loading);
     
     let filtered = blogs.filter(blog => blog.isPublished);
     
@@ -127,6 +128,39 @@ const BlogPage = () => {
         </div>
       </section>
 
+      {/* Debug Section - Remove this later */}
+      <section className="py-10 bg-red-100 dark:bg-red-900/20">
+        <div className="max-w-7xl mx-auto px-6">
+          <h3 className="text-xl font-bold mb-4">Debug Info:</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div>
+              <strong>Loading:</strong> {loading ? 'Yes' : 'No'}
+            </div>
+            <div>
+              <strong>Total Blogs:</strong> {blogs.length}
+            </div>
+            <div>
+              <strong>Published Blogs:</strong> {blogs.filter(blog => blog.isPublished).length}
+            </div>
+            <div>
+              <strong>Filtered Blogs:</strong> {filteredBlogs.length}
+            </div>
+            <div>
+              <strong>Search Term:</strong> "{searchTerm}"
+            </div>
+            <div>
+              <strong>Category Filter:</strong> "{categoryFilter}"
+            </div>
+          </div>
+          <div className="mt-4">
+            <strong>Raw Blog Data:</strong>
+            <pre className="text-xs bg-white dark:bg-gray-800 p-2 rounded mt-2 overflow-auto max-h-40">
+              {JSON.stringify(blogs, null, 2)}
+            </pre>
+          </div>
+        </div>
+      </section>
+
       {/* Blog Posts Section */}
       <section className="py-20 bg-background relative">
         <div className="max-w-7xl mx-auto px-6">
@@ -139,14 +173,14 @@ const BlogPage = () => {
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
               <p className="text-muted-foreground">Loading articles...</p>
             </motion.div>
-          ) : filteredBlogs.length > 0 ? (
+          ) : (filteredBlogs.length > 0 || blogs.length > 0) ? (
             <motion.div 
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
             >
-              {filteredBlogs.map((blog, index) => (
+              {(filteredBlogs.length > 0 ? filteredBlogs : blogs).map((blog, index) => (
                 <motion.article
                   key={blog.id}
                   variants={itemVariants}

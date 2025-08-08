@@ -22,6 +22,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminEnquiries from "./pages/AdminEnquiries";
 import AdminBlogs from "./pages/AdminBlogs";
 import BlogPage from "./pages/Blog";
+import BlogTest from "./pages/BlogTest";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -129,6 +130,7 @@ const App = () => {
                   <Route path="/services" element={<Services />} />
                   <Route path="/contact" element={<ContactUs />} />
                   <Route path="/blog" element={<BlogPage />} />
+                  <Route path="/blog-test" element={<BlogTest />} />
                   <Route path="/cookware" element={<Cookware />} />
                   <Route path="/dinnerware" element={<Dinnerware />} />
                   <Route path="/drinkware" element={<Drinkware />} />
