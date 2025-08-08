@@ -318,10 +318,7 @@ const AdminBlogs = () => {
                       <User className="w-4 h-4" />
                       <span>{blog.author}</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                      <TrendingUp className="w-4 h-4" />
-                      <span>{blog.views} views</span>
-                    </div>
+                    
                   </div>
 
                   <div className="flex items-center space-x-2 mb-4">
