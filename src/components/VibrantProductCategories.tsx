@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Star, Shield } from "lucide-react";
+import { ArrowRight, Star, Shield, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import cookware from "@/assets/cookware.jpg";
 import dinnerware from "@/assets/dinnerware.jpg";
@@ -16,6 +16,19 @@ gsap.registerPlugin(ScrollTrigger);
 const VibrantProductCategories = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  const handleCatalogDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/ALPIFY GLOBAL_Catologue_2025-2026.pdf';
+    link.download = 'ALPIFY GLOBAL_Catalogue_2025-2026.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleCatalogPreview = () => {
+    window.open('/ALPIFY GLOBAL_Catologue_2025-2026.pdf', '_blank');
+  };
 
   const categories = [
     {
@@ -93,7 +106,7 @@ const VibrantProductCategories = () => {
         }
       );
 
-      gsap.utils.toArray(".category-image").forEach((image: any) => {
+      gsap.utils.toArray(".category-image").forEach((image: Element) => {
         gsap.to(image, {
           yPercent: -20,
           ease: "none",
@@ -244,17 +257,20 @@ const VibrantProductCategories = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-steel-accent font-semibold py-3 px-8 rounded-xl hover:bg-gray-50 transition-colors duration-300"
+                onClick={handleCatalogDownload}
+                className="bg-white text-steel-accent font-semibold py-3 px-8 rounded-xl hover:bg-gray-50 transition-colors duration-300 flex items-center justify-center"
               >
+                <Download className="w-5 h-5 mr-2" />
                 Get Free Catalog
               </motion.button>
               
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handleCatalogPreview}
                 className="bg-transparent border-2 border-white text-white font-semibold py-3 px-8 rounded-xl hover:bg-white/10 transition-colors duration-300"
               >
-                Contact Sales Team
+                Preview Catalog
               </motion.button>
             </div>
           </div>

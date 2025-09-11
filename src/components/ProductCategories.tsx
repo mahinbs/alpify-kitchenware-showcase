@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Star, Shield, Zap } from "lucide-react";
+import { ArrowRight, Star, Shield, Zap, Download } from "lucide-react";
 import cookware from "@/assets/cookware.jpg";
 import dinnerware from "@/assets/dinnerware.jpg";
 import drinkware from "@/assets/drinkware.jpg";
@@ -16,6 +16,19 @@ gsap.registerPlugin(ScrollTrigger);
 const ProductCategories = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  const handleCatalogDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/ALPIFY GLOBAL_Catologue_2025-2026.pdf';
+    link.download = 'ALPIFY GLOBAL_Catalogue_2025-2026.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleCatalogPreview = () => {
+    window.open('/ALPIFY GLOBAL_Catologue_2025-2026.pdf', '_blank');
+  };
 
   const categories = [
     {
@@ -101,7 +114,7 @@ const ProductCategories = () => {
       );
 
       // Parallax effect for category images
-      gsap.utils.toArray(".category-image").forEach((image: any) => {
+      gsap.utils.toArray(".category-image").forEach((image: Element) => {
         gsap.to(image, {
           yPercent: -20,
           ease: "none",
@@ -242,17 +255,19 @@ const ProductCategories = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn-primary bg-white text-steel-primary hover:bg-gray-100"
+                onClick={handleCatalogDownload}
+                className="btn-primary bg-white text-steel-primary hover:bg-gray-100 flex items-center justify-center"
               >
-                <Zap className="w-5 h-5 mr-2" />
+                <Download className="w-5 h-5 mr-2" />
                 Get Free Catalog
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handleCatalogPreview}
                 className="btn-outline border-white text-white hover:bg-white hover:text-steel-primary"
               >
-                Contact Sales Team
+                Preview Catalog
               </motion.button>
             </div>
           </div>
