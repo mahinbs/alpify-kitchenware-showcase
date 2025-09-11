@@ -328,7 +328,7 @@ const ElegantVideoHero = () => {
       <VideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
-        videoUrl="https://res.cloudinary.com/dsrqs3aat/video/upload/v1757583837/VN20250911_150929_zbsspt.mp4"
+        videoUrl="/demo.mp4"
       />
     </section>
   );

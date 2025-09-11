@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { X, Play, Pause, Volume2, VolumeX, Loader2 } from "lucide-react";
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -14,6 +14,7 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (isOpen && videoRef.current) {
@@ -21,6 +22,7 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
       videoRef.current.currentTime = 0;
       setIsPlaying(false);
       setCurrentTime(0);
+      setIsLoading(true);
     }
   }, [isOpen]);
 
@@ -70,6 +72,22 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration);
     }
+  };
+
+  const handleCanPlay = () => {
+    setIsLoading(false);
+  };
+
+  const handleLoadStart = () => {
+    setIsLoading(true);
+  };
+
+  const handleWaiting = () => {
+    setIsLoading(true);
+  };
+
+  const handleCanPlayThrough = () => {
+    setIsLoading(false);
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,12 +140,35 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 onEnded={() => setIsPlaying(false)}
+                onCanPlay={handleCanPlay}
+                onLoadStart={handleLoadStart}
+                onWaiting={handleWaiting}
+                onCanPlayThrough={handleCanPlayThrough}
                 muted={isMuted}
                 preload="metadata"
               >
                 <source src={videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
+
+              {/* Loading Overlay */}
+              {isLoading && (
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center space-y-4"
+                  >
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Loader2 size={48} className="text-yellow-400" />
+                    </motion.div>
+                    <p className="text-white text-lg font-medium">Loading video...</p>
+                  </motion.div>
+                </div>
+              )}
 
               {/* Video Controls Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 group">
