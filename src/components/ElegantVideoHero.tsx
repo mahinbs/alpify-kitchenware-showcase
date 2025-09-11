@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowDown, Play, Star, Sparkles, ChevronRight, Volume2, VolumeX } from "lucide-react";
+import VideoModal from "./VideoModal";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -16,6 +17,7 @@ const ElegantVideoHero = () => {
   const isInView = useInView(heroRef, { once: true, margin: "-100px" });
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -284,6 +286,7 @@ const ElegantVideoHero = () => {
           <motion.button
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => setIsVideoModalOpen(true)}
             className="group bg-white/10 backdrop-blur-md border-2 border-white/30 text-white font-semibold text-lg px-10 py-5 rounded-full hover:bg-white/20 hover:border-white/50 transition-all duration-300"
           >
             <span className="flex items-center">
@@ -320,6 +323,13 @@ const ElegantVideoHero = () => {
 
       {/* Bottom Gradient Overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
+
+      {/* Video Modal */}
+      <VideoModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        videoUrl="https://res.cloudinary.com/dsrqs3aat/video/upload/v1757583837/VN20250911_150929_zbsspt.mp4"
+      />
     </section>
   );
 };
