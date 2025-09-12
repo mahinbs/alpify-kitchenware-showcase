@@ -69,7 +69,7 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          className="fixed inset-0 z-[99] flex items-center justify-center bg-black/80 backdrop-blur-sm"
           onClick={onClose}
         >
           <motion.div
@@ -81,12 +81,12 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
-            <button
+            {/* <button
               onClick={onClose}
               className="absolute top-4 right-4 z-10 p-2 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-200"
             >
               <X size={24} />
-            </button>
+            </button> */}
 
             {/* YouTube Video Container */}
             <div className="relative aspect-video bg-black">
