@@ -132,7 +132,7 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
                         >
                           <Loader2 size={48} className="text-yellow-400" />
                         </motion.div>
-                        <p className="text-white text-lg font-medium">Loading YouTube video...</p>
+                        <p className="text-white text-lg font-medium">Loading...</p>
                       </motion.div>
                     </div>
                   )}
