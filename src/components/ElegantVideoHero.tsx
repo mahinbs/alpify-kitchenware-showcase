@@ -122,7 +122,7 @@ const ElegantVideoHero = () => {
     <section 
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ paddingTop: '6rem' }}
+      style={{ paddingTop: '8rem' }}
     >
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
@@ -190,7 +190,7 @@ const ElegantVideoHero = () => {
       </div>
 
       {/* Video Controls */}
-      <motion.button
+      {/* <motion.button
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 1.5 }}
@@ -200,7 +200,7 @@ const ElegantVideoHero = () => {
         whileTap={{ scale: 0.9 }}
       >
         {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-      </motion.button>
+      </motion.button> */}
 
       {/* Main Content */}
       <div className="container-modern relative z-20 text-center text-white px-4 sm:px-6 lg:px-8">
@@ -300,7 +300,7 @@ const ElegantVideoHero = () => {
       {/* Elegant Scroll Indicator */}
       <motion.div 
         ref={scrollIndicatorRef}
-        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white opacity-70 cursor-pointer z-30"
+        className="absolute sm:block hidden bottom-12 left-1/2 transform -translate-x-1/2 text-white opacity-70 cursor-pointer z-30"
         onClick={scrollToNext}
         whileHover={{ scale: 1.1, opacity: 1 }}
         whileTap={{ scale: 0.9 }}
@@ -328,7 +328,7 @@ const ElegantVideoHero = () => {
       <VideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
-        videoUrl="/demo.mp4"
+        videoUrl="https://youtu.be/V1Aw2ormczc?feature=shared"
       />
     </section>
   );

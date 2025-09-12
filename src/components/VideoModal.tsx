@@ -173,7 +173,7 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
               {/* Video Controls Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 group">
                 {/* Play/Pause Button */}
-                <button
+                {/* <button
                   onClick={togglePlay}
                   className="absolute inset-0 flex items-center justify-center text-white/80 hover:text-white transition-colors duration-200"
                 >
@@ -184,7 +184,7 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
                   >
                     {isPlaying ? <Pause size={48} /> : <Play size={48} />}
                   </motion.div>
-                </button>
+                </button> */}
 
                 {/* Bottom Controls */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
