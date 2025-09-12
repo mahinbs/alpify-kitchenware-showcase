@@ -298,9 +298,9 @@ const ElegantVideoHero = () => {
       </div>
 
       {/* Elegant Scroll Indicator */}
-      <motion.div 
+      {/* <motion.div 
         ref={scrollIndicatorRef}
-        className="absolute sm:block hidden bottom-12 left-1/2 transform -translate-x-1/2 text-white opacity-70 cursor-pointer z-30"
+        className="absolute sm:block hidden bottom-0 left-1/2 transform -translate-x-1/2 text-white opacity-70 cursor-pointer z-30"
         onClick={scrollToNext}
         whileHover={{ scale: 1.1, opacity: 1 }}
         whileTap={{ scale: 0.9 }}
@@ -319,7 +319,7 @@ const ElegantVideoHero = () => {
             />
           </div>
         </motion.div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Bottom Gradient Overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />

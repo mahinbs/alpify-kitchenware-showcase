@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Play, Pause, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { X, Loader2, AlertCircle } from "lucide-react";
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -9,22 +9,31 @@ interface VideoModalProps {
 }
 
 const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [youtubeVideoId, setYoutubeVideoId] = useState<string | null>(null);
+
+  // Function to extract YouTube video ID from URL
+  const extractYouTubeVideoId = (url: string): string | null => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
 
   useEffect(() => {
-    if (isOpen && videoRef.current) {
-      // Reset video when modal opens
-      videoRef.current.currentTime = 0;
-      setIsPlaying(false);
-      setCurrentTime(0);
-      setIsLoading(true);
+    if (isOpen) {
+      const videoId = extractYouTubeVideoId(videoUrl);
+      if (videoId) {
+        setYoutubeVideoId(videoId);
+        setHasError(false);
+        setIsLoading(true);
+      } else {
+        setHasError(true);
+        setIsLoading(false);
+      }
     }
-  }, [isOpen]);
+  }, [isOpen, videoUrl]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -44,64 +53,13 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
     };
   }, [isOpen, onClose]);
 
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!videoRef.current.muted);
-    }
-  };
-
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
-    }
-  };
-
-  const handleCanPlay = () => {
+  const handleIframeLoad = () => {
     setIsLoading(false);
   };
 
-  const handleLoadStart = () => {
-    setIsLoading(true);
-  };
-
-  const handleWaiting = () => {
-    setIsLoading(true);
-  };
-
-  const handleCanPlayThrough = () => {
+  const handleIframeError = () => {
+    setHasError(true);
     setIsLoading(false);
-  };
-
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (videoRef.current) {
-      const newTime = parseFloat(e.target.value);
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
-    }
-  };
-
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -130,103 +88,67 @@ const VideoModal = ({ isOpen, onClose, videoUrl }: VideoModalProps) => {
               <X size={24} />
             </button>
 
-            {/* Video Container */}
+            {/* YouTube Video Container */}
             <div className="relative aspect-video bg-black">
-              <video
-                ref={videoRef}
-                className="w-full h-full object-contain"
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-                onPlay={() => setIsPlaying(true)}
-                onPause={() => setIsPlaying(false)}
-                onEnded={() => setIsPlaying(false)}
-                onCanPlay={handleCanPlay}
-                onLoadStart={handleLoadStart}
-                onWaiting={handleWaiting}
-                onCanPlayThrough={handleCanPlayThrough}
-                muted={isMuted}
-                preload="metadata"
-              >
-                <source src={videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              {hasError ? (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center space-y-4 text-center"
+                  >
+                    <AlertCircle size={48} className="text-red-400" />
+                    <div>
+                      <p className="text-white text-lg font-medium">Invalid YouTube URL</p>
+                      <p className="text-white/70 text-sm">Please provide a valid YouTube video URL</p>
+                    </div>
+                  </motion.div>
+                </div>
+              ) : youtubeVideoId ? (
+                <>
+                  <iframe
+                    ref={iframeRef}
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0&controls=1&fs=1&cc_load_policy=0&iv_load_policy=3&autohide=0`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    onLoad={handleIframeLoad}
+                    onError={handleIframeError}
+                  />
 
-              {/* Loading Overlay */}
-              {isLoading && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
+                  {/* Loading Overlay */}
+                  {isLoading && (
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="flex flex-col items-center space-y-4"
+                      >
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        >
+                          <Loader2 size={48} className="text-yellow-400" />
+                        </motion.div>
+                        <p className="text-white text-lg font-medium">Loading YouTube video...</p>
+                      </motion.div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="flex flex-col items-center space-y-4"
                   >
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Loader2 size={48} className="text-yellow-400" />
-                    </motion.div>
-                    <p className="text-white text-lg font-medium">Loading video...</p>
+                    <Loader2 size={48} className="text-yellow-400 animate-spin" />
+                    <p className="text-white text-lg font-medium">Processing video URL...</p>
                   </motion.div>
                 </div>
               )}
-
-              {/* Video Controls Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 group">
-                {/* Play/Pause Button */}
-                {/* <button
-                  onClick={togglePlay}
-                  className="absolute inset-0 flex items-center justify-center text-white/80 hover:text-white transition-colors duration-200"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-4 bg-black/50 backdrop-blur-sm rounded-full"
-                  >
-                    {isPlaying ? <Pause size={48} /> : <Play size={48} />}
-                  </motion.div>
-                </button> */}
-
-                {/* Bottom Controls */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                  {/* Progress Bar */}
-                  <div className="mb-4">
-                    <input
-                      type="range"
-                      min="0"
-                      max={duration || 0}
-                      value={currentTime}
-                      onChange={handleSeek}
-                      className="w-full h-1 bg-white/30 rounded-lg appearance-none cursor-pointer slider"
-                      style={{
-                        background: `linear-gradient(to right, #fbbf24 0%, #fbbf24 ${(currentTime / duration) * 100}%, rgba(255,255,255,0.3) ${(currentTime / duration) * 100}%, rgba(255,255,255,0.3) 100%)`
-                      }}
-                    />
-                  </div>
-
-                  {/* Control Buttons */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <button
-                        onClick={togglePlay}
-                        className="p-2 text-white hover:text-yellow-400 transition-colors duration-200"
-                      >
-                        {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                      </button>
-                      
-                      <button
-                        onClick={toggleMute}
-                        className="p-2 text-white hover:text-yellow-400 transition-colors duration-200"
-                      >
-                        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                      </button>
-
-                      <span className="text-white text-sm font-mono">
-                        {formatTime(currentTime)} / {formatTime(duration)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </motion.div>
         </motion.div>
