@@ -14,7 +14,7 @@ const AdminLogin = () => {
   } = useContext(DarkModeContext);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [email, setEmail] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -46,8 +46,36 @@ const AdminLogin = () => {
     setError("");
 
     try {
+      let loginEmail = emailOrUsername;
+
+      // If input doesn't contain @, it's a username - look up the email
+      if (!emailOrUsername.includes('@')) {
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('user_id')
+          .eq('username', emailOrUsername)
+          .single();
+
+        if (profileError || !profile) {
+          setError("Username not found");
+          setIsLoading(false);
+          return;
+        }
+
+        // Get the email from auth.users table using the user_id
+        const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(profile.user_id);
+        
+        if (userError || !user?.email) {
+          setError("Unable to find user email");
+          setIsLoading(false);
+          return;
+        }
+
+        loginEmail = user.email;
+      }
+
       const { data, error: authError } = await supabase.auth.signInWithPassword({
-        email,
+        email: loginEmail,
         password,
       });
 
@@ -117,14 +145,14 @@ const AdminLogin = () => {
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
-              {/* Email Field */}
+              {/* Email or Username Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                  Email
+                <label htmlFor="emailOrUsername" className="block text-sm font-medium text-foreground mb-2">
+                  Email or Username
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Enter email" required />
+                  <input id="emailOrUsername" type="text" value={emailOrUsername} onChange={e => setEmailOrUsername(e.target.value)} className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Enter email or username" required />
                 </div>
               </div>
 
