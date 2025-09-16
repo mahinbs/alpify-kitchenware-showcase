@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Eye, EyeOff, Lock, User, AlertCircle, UserPlus } from "lucide-react";
+import { Eye, EyeOff, Lock, User, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -69,29 +69,6 @@ const AdminLogin = () => {
         setError(authError.message);
         setIsLoading(false);
         return;
-      }
-
-      if (data.user) {
-        // Check if user is admin
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('user_id', data.user.id)
-          .single();
-
-        if (profileError || profile?.role !== 'admin') {
-          setError("Access denied. Admin privileges required.");
-          await supabase.auth.signOut();
-          setIsLoading(false);
-          return;
-        }
-
-        toast({
-          title: "Login successful",
-          description: "Welcome back, admin!",
-        });
-        
-        navigate("/admin/dashboard");
       }
 
       if (data.user) {
