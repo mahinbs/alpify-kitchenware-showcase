@@ -92,11 +92,11 @@ const BlogDetail = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Calendar className="w-4 h-4" />
-                <span>{new Date(blog.publishedAt).toLocaleDateString()}</span>
+                <span>{new Date(blog.published_at).toLocaleDateString()}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="w-4 h-4" />
-                <span>{blog.readTime} min read</span>
+                <span>{blog.read_time} min read</span>
               </div>
               <div className="flex items-center space-x-2">
                 <TrendingUp className="w-4 h-4" />
@@ -172,7 +172,7 @@ const BlogDetail = () => {
                   </button>
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Last updated: {new Date(blog.updatedAt).toLocaleDateString()}
+                  Last updated: {new Date(blog.updated_at).toLocaleDateString()}
                 </div>
               </div>
             </div>

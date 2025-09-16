@@ -26,7 +26,7 @@ const BlogPage = () => {
 
   // Filter blogs based on search and category
   useEffect(() => {
-    let filtered = blogs.filter(blog => blog.isPublished);
+    let filtered = blogs.filter(blog => blog.is_published);
     if (searchTerm) {
       filtered = filtered.filter(blog => blog.title.toLowerCase().includes(searchTerm.toLowerCase()) || blog.content.toLowerCase().includes(searchTerm.toLowerCase()) || blog.author.toLowerCase().includes(searchTerm.toLowerCase()) || blog.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())));
     }
@@ -145,11 +145,11 @@ const BlogPage = () => {
                     <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center space-x-1">
                         <Calendar className="w-4 h-4" />
-                        <span>{blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString() : 'No date'}</span>
+                        <span>{blog.published_at ? new Date(blog.published_at).toLocaleDateString() : 'No date'}</span>
                       </div>
                       <div className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
-                        <span>{blog.readTime || 5} min read</span>
+                        <span>{blog.read_time || 5} min read</span>
                       </div>
                     </div>
 

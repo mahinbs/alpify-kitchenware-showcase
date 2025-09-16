@@ -10,12 +10,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 const AdminBlogs = () => {
   const {
     darkMode,
     toggleDarkMode
   } = useContext(DarkModeContext);
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,57 +33,60 @@ const AdminBlogs = () => {
     category: "",
     tags: "",
     image: "",
-    isPublished: true
+    is_published: true
   });
 
   // Check authentication
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("adminAuthenticated");
-    if (!isAuthenticated) {
-      navigate("/admin/login");
-    }
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/admin/login");
+        return;
+      }
+
+      // Check if user is admin
+      const { data: isAdmin } = await supabase.rpc('is_admin', { user_uuid: session.user.id });
+      if (!isAdmin) {
+        navigate("/admin/login");
+        return;
+      }
+    };
+
+    checkAuth();
   }, [navigate]);
 
-  // Load blogs from localStorage
+  // Load blogs from Supabase
   useEffect(() => {
-    const savedBlogs = localStorage.getItem("adminBlogs");
-    if (savedBlogs) {
-      setBlogs(JSON.parse(savedBlogs));
-    } else {
-      // Add sample blogs if none exist
-      const sampleBlogs: Blog[] = [{
-        id: "1",
-        title: "The Future of Stainless Steel Kitchenware",
-        content: "Stainless steel kitchenware has been a staple in professional kitchens for decades. Its durability, resistance to corrosion, and ease of maintenance make it an ideal choice for both commercial and residential use. In this comprehensive guide, we explore the latest innovations in stainless steel manufacturing and how they're shaping the future of kitchenware...",
-        excerpt: "Discover the latest innovations in stainless steel kitchenware manufacturing and how they're revolutionizing the industry.",
-        author: "Alpify Global Team",
-        category: "Industry Insights",
-        tags: ["stainless steel", "innovation", "manufacturing", "kitchenware"],
-        image: "https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png",
-        publishedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-        updatedAt: new Date().toISOString(),
-        isPublished: true,
-        readTime: 5,
-        views: 1250
-      }, {
-        id: "2",
-        title: "Choosing the Right Cookware for Your Kitchen",
-        content: "Selecting the perfect cookware set can be overwhelming with so many options available. From stainless steel to non-stick coatings, each material offers unique benefits. This guide will help you understand the differences between various cookware materials and choose the best option for your cooking needs...",
-        excerpt: "A comprehensive guide to selecting the perfect cookware set for your kitchen needs and cooking style.",
-        author: "Kitchen Expert",
-        category: "Buying Guide",
-        tags: ["cookware", "buying guide", "kitchen essentials", "cooking"],
-        image: "https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png",
-        publishedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-        updatedAt: new Date().toISOString(),
-        isPublished: true,
-        readTime: 8,
-        views: 890
-      }];
-      setBlogs(sampleBlogs);
-      localStorage.setItem("adminBlogs", JSON.stringify(sampleBlogs));
-    }
-  }, []);
+    const loadBlogs = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('blogs')
+          .select('*')
+          .order('updated_at', { ascending: false });
+
+        if (error) {
+          console.error('Error loading blogs:', error);
+          toast({
+            title: "Error",
+            description: "Failed to load blogs",
+            variant: "destructive",
+          });
+        } else {
+          setBlogs(data || []);
+        }
+      } catch (error) {
+        console.error('Error loading blogs:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load blogs",
+          variant: "destructive",
+        });
+      }
+    };
+
+    loadBlogs();
+  }, [toast]);
 
   // Filter blogs based on search and category
   useEffect(() => {
@@ -104,7 +110,7 @@ const AdminBlogs = () => {
       category: "",
       tags: "",
       image: "",
-      isPublished: true
+      is_published: true
     });
     setShowModal(true);
   };
@@ -117,50 +123,122 @@ const AdminBlogs = () => {
       author: blog.author,
       category: blog.category,
       tags: blog.tags.join(", "),
-      image: blog.image,
-      isPublished: blog.isPublished
+      image: blog.image || "",
+      is_published: blog.is_published
     });
     setShowModal(true);
   };
-  const handleDeleteBlog = (blogId: string) => {
-    const updatedBlogs = blogs.filter(blog => blog.id !== blogId);
-    setBlogs(updatedBlogs);
-    localStorage.setItem("adminBlogs", JSON.stringify(updatedBlogs));
-    window.dispatchEvent(new CustomEvent('blogsUpdated'));
+  const handleDeleteBlog = async (blogId: string) => {
+    try {
+      const { error } = await supabase
+        .from('blogs')
+        .delete()
+        .eq('id', blogId);
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to delete blog",
+          variant: "destructive",
+        });
+      } else {
+        setBlogs(blogs.filter(blog => blog.id !== blogId));
+        toast({
+          title: "Success",
+          description: "Blog deleted successfully",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete blog",
+        variant: "destructive",
+      });
+    }
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const blogData: Blog = {
-      id: editingBlog?.id || Date.now().toString(),
-      title: formData.title,
-      content: formData.content,
-      excerpt: formData.excerpt,
-      author: formData.author,
-      category: formData.category,
-      tags: formData.tags.split(",").map(tag => tag.trim()).filter(tag => tag),
-      image: formData.image,
-      publishedAt: editingBlog?.publishedAt || new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      isPublished: formData.isPublished,
-      readTime: Math.ceil(formData.content.split(" ").length / 200),
-      // Estimate read time
-      views: editingBlog?.views || 0
-    };
-    let updatedBlogs;
-    if (editingBlog) {
-      updatedBlogs = blogs.map(blog => blog.id === editingBlog.id ? blogData : blog);
-    } else {
-      updatedBlogs = [...blogs, blogData];
+    
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to perform this action",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const blogData = {
+        title: formData.title,
+        content: formData.content,
+        excerpt: formData.excerpt,
+        author: formData.author,
+        category: formData.category,
+        tags: formData.tags.split(",").map(tag => tag.trim()).filter(tag => tag),
+        image: formData.image || null,
+        is_published: formData.is_published,
+        read_time: Math.ceil(formData.content.split(" ").length / 200),
+        created_by: session.user.id
+      };
+
+      if (editingBlog) {
+        const { data, error } = await supabase
+          .from('blogs')
+          .update(blogData)
+          .eq('id', editingBlog.id)
+          .select()
+          .single();
+
+        if (error) {
+          toast({
+            title: "Error",
+            description: "Failed to update blog",
+            variant: "destructive",
+          });
+        } else {
+          setBlogs(blogs.map(blog => blog.id === editingBlog.id ? data : blog));
+          toast({
+            title: "Success",
+            description: "Blog updated successfully",
+          });
+          setShowModal(false);
+        }
+      } else {
+        const { data, error } = await supabase
+          .from('blogs')
+          .insert(blogData)
+          .select()
+          .single();
+
+        if (error) {
+          toast({
+            title: "Error",
+            description: "Failed to create blog",
+            variant: "destructive",
+          });
+        } else {
+          setBlogs([data, ...blogs]);
+          toast({
+            title: "Success",
+            description: "Blog created successfully",
+          });
+          setShowModal(false);
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
     }
-    setBlogs(updatedBlogs);
-    localStorage.setItem("adminBlogs", JSON.stringify(updatedBlogs));
-    window.dispatchEvent(new CustomEvent('blogsUpdated'));
-    setShowModal(false);
   };
   const stats = {
     total: blogs.length,
-    published: blogs.filter(blog => blog.isPublished).length,
-    draft: blogs.filter(blog => !blog.isPublished).length,
+    published: blogs.filter(blog => blog.is_published).length,
+    draft: blogs.filter(blog => !blog.is_published).length,
     totalViews: blogs.reduce((sum, blog) => sum + blog.views, 0)
   };
   return <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
@@ -287,10 +365,10 @@ const AdminBlogs = () => {
           }} className="bg-card border border-border rounded-xl overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-300">
                 {/* Blog Image */}
                 <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 relative">
-                  <img src={blog.image} alt={blog.title} className="w-full h-full object-cover" />
+                  {blog.image && <img src={blog.image} alt={blog.title} className="w-full h-full object-cover" />}
                   <div className="absolute top-2 right-2">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${blog.isPublished ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'}`}>
-                      {blog.isPublished ? 'Published' : 'Draft'}
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${blog.is_published ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'}`}>
+                      {blog.is_published ? 'Published' : 'Draft'}
                     </span>
                   </div>
                 </div>
@@ -299,10 +377,10 @@ const AdminBlogs = () => {
                 <div className="p-6">
                   <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-3">
                     <Calendar className="w-4 h-4" />
-                    <span>{new Date(blog.publishedAt).toLocaleDateString()}</span>
+                    <span>{new Date(blog.published_at).toLocaleDateString()}</span>
                     <span>•</span>
                     <Clock className="w-4 h-4" />
-                    <span>{blog.readTime} min read</span>
+                    <span>{blog.read_time} min read</span>
                   </div>
 
                   <h3 className="text-xl font-bold text-primary mb-2 line-clamp-2">
@@ -474,11 +552,11 @@ const AdminBlogs = () => {
               </div>
 
               <div className="flex items-center space-x-2">
-                <input type="checkbox" id="isPublished" checked={formData.isPublished} onChange={e => setFormData({
+                <input type="checkbox" id="is_published" checked={formData.is_published} onChange={e => setFormData({
               ...formData,
-              isPublished: e.target.checked
+              is_published: e.target.checked
             })} className="rounded border-border" />
-                <Label htmlFor="isPublished" className="text-foreground font-medium">
+                <Label htmlFor="is_published" className="text-foreground font-medium">
                   Publish immediately
                 </Label>
               </div>

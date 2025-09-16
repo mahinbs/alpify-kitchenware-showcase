@@ -17,7 +17,7 @@ const BlogTest = () => {
       </div>
       
       <div className="mb-4">
-        <strong>Published Blogs:</strong> {blogs.filter(blog => blog.isPublished).length}
+        <strong>Published Blogs:</strong> {blogs.filter(blog => blog.is_published).length}
       </div>
       
       <div className="mb-4">
