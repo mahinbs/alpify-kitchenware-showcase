@@ -50,28 +50,14 @@ const AdminLogin = () => {
 
       // If input doesn't contain @, it's a username - look up the email
       if (!emailOrUsername.includes('@')) {
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('user_id')
-          .eq('username', emailOrUsername)
-          .single();
-
-        if (profileError || !profile) {
+        // For the specific admin username, use a known email
+        if (emailOrUsername === 'admin') {
+          loginEmail = 'admin@alpify.com';
+        } else {
           setError("Username not found");
           setIsLoading(false);
           return;
         }
-
-        // Get the email from auth.users table using the user_id
-        const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(profile.user_id);
-        
-        if (userError || !user?.email) {
-          setError("Unable to find user email");
-          setIsLoading(false);
-          return;
-        }
-
-        loginEmail = user.email;
       }
 
       const { data, error: authError } = await supabase.auth.signInWithPassword({
@@ -83,6 +69,29 @@ const AdminLogin = () => {
         setError(authError.message);
         setIsLoading(false);
         return;
+      }
+
+      if (data.user) {
+        // Check if user is admin
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('user_id', data.user.id)
+          .single();
+
+        if (profileError || profile?.role !== 'admin') {
+          setError("Access denied. Admin privileges required.");
+          await supabase.auth.signOut();
+          setIsLoading(false);
+          return;
+        }
+
+        toast({
+          title: "Login successful",
+          description: "Welcome back, admin!",
+        });
+        
+        navigate("/admin/dashboard");
       }
 
       if (data.user) {
