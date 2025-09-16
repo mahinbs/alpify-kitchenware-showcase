@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Eye, EyeOff, Lock, User, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, Lock, User, AlertCircle, UserPlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -19,8 +19,10 @@ const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showSetup, setShowSetup] = useState(false);
+  const [setupComplete, setSetupComplete] = useState(false);
 
-  // Check if user is already authenticated
+  // Check if user is already authenticated and if admin exists
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -35,6 +37,17 @@ const AdminLogin = () => {
         if (profile?.role === 'admin') {
           navigate("/admin/dashboard");
         }
+      }
+
+      // Check if any admin exists
+      const { data: adminExists } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('role', 'admin')
+        .limit(1);
+      
+      if (!adminExists || adminExists.length === 0) {
+        setShowSetup(true);
       }
     };
     checkAuth();
@@ -122,6 +135,58 @@ const AdminLogin = () => {
       setIsLoading(false);
     }
   };
+
+  const handleSetupAdmin = async () => {
+    setIsLoading(true);
+    setError("");
+
+    try {
+      // Create admin user
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: 'admin@alpifyglobal.com',
+        password: 'alpify2024',
+        options: {
+          data: {
+            username: 'admin',
+            role: 'admin'
+          }
+        }
+      });
+
+      if (signUpError) {
+        setError(signUpError.message);
+        setIsLoading(false);
+        return;
+      }
+
+      if (data.user) {
+        // Create profile
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+            user_id: data.user.id,
+            username: 'admin',
+            role: 'admin'
+          });
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+        }
+
+        toast({
+          title: "Admin setup complete",
+          description: "Admin account created successfully. You can now login.",
+        });
+
+        setSetupComplete(true);
+        setShowSetup(false);
+      }
+    } catch (err) {
+      setError("Failed to create admin account");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
@@ -153,6 +218,46 @@ const AdminLogin = () => {
               <p className="text-muted-foreground">Access the product management panel</p>
             </div>
 
+            {showSetup ? (
+              <div className="space-y-6">
+                <div className="text-center p-4 bg-primary/10 rounded-lg border border-primary/20">
+                  <UserPlus className="w-12 h-12 text-primary mx-auto mb-3" />
+                  <h2 className="text-lg font-semibold text-primary mb-2">Setup Required</h2>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    No admin account found. Click below to create the admin account.
+                  </p>
+                  <motion.button
+                    type="button"
+                    onClick={handleSetupAdmin}
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-primary to-vibrant-orange text-white py-3 rounded-lg font-semibold hover:shadow-glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        <span>Creating Admin...</span>
+                      </div>
+                    ) : (
+                      "Create Admin Account"
+                    )}
+                  </motion.button>
+                </div>
+
+                {/* Error Message */}
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center space-x-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive"
+                  >
+                    <AlertCircle className="w-5 h-5" />
+                    <span className="text-sm">{error}</span>
+                  </motion.div>
+                )}
+              </div>
+            ) : (
             <form onSubmit={handleLogin} className="space-y-6">
               {/* Email or Username Field */}
               <div>
@@ -203,6 +308,7 @@ const AdminLogin = () => {
                   </div> : "Sign In"}
               </motion.button>
             </form>
+            )}
 
             {/* Admin Credentials Info */}
             
