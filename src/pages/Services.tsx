@@ -7,7 +7,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
-import { DarkModeContext } from "@/App";
+import { DarkModeContext } from "@/contexts/DarkModeContext";
 
 // Import images for the 6 product categories
 import cookwareImg from "@/assets/cookware.jpg";

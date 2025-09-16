@@ -4,7 +4,7 @@ import { Plus, Edit, Trash2, Eye, EyeOff, Search, Calendar, User, Tag, Image as 
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { DarkModeContext } from "@/App";
+import { DarkModeContext } from "@/contexts/DarkModeContext";
 import { Blog } from "@/hooks/use-blogs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -413,7 +413,7 @@ const AdminBlogs = () => {
 
                   {/* Action Buttons */}
                   <div className="flex items-center space-x-2">
-                    <motion.button onClick={() => handleEditBlog(blog)} className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm" whileHover={{
+                    <motion.button onClick={() => handleEditBlog(blog)} className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 bg-black hover:text-black text-white rounded-lg hover:bg-primary/90 transition-colors text-sm" whileHover={{
                   scale: 1.02
                 }} whileTap={{
                   scale: 0.98

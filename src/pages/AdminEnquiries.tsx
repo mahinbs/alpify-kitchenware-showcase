@@ -18,7 +18,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { DarkModeContext } from "@/App";
+import { DarkModeContext } from "@/contexts/DarkModeContext";
 
 interface Enquiry {
   id: string;
@@ -47,13 +47,8 @@ const AdminEnquiries = () => {
   const [showResponseModal, setShowResponseModal] = useState(false);
   const [responseText, setResponseText] = useState("");
 
-  // Check authentication
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("adminAuthenticated");
-    if (!isAuthenticated) {
-      navigate("/admin/login");
-    }
-  }, [navigate]);
+  // Authentication is now handled by ProtectedRoute component
+  // No need for manual authentication check here
 
   // Load enquiries from localStorage
   useEffect(() => {

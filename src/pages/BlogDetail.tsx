@@ -4,7 +4,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { Calendar, User, Tag, Clock, TrendingUp, ArrowLeft, Share2 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { DarkModeContext } from "@/App";
+import { DarkModeContext } from "@/contexts/DarkModeContext";
 import { useBlogs, Blog } from "@/hooks/use-blogs";
 
 const BlogDetail = () => {

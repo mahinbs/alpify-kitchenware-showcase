@@ -1,67 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import React from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loader2, Shield } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { Session } from "@supabase/supabase-js";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   redirectTo?: string;
+  requireAdmin?: boolean;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
   children, 
-  redirectTo = "/admin/login" 
+  redirectTo = "/admin/login",
+  requireAdmin = true
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const { isAuthenticated, isAdmin, isLoading } = useAuth();
+  const location = useLocation();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      // Get current session
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      setSession(currentSession);
-
-      if (currentSession) {
-        // Check if user is admin
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('user_id', currentSession.user.id)
-          .single();
-        
-        setIsAuthenticated(profile?.role === 'admin');
-      } else {
-        setIsAuthenticated(false);
-      }
-    };
-
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        
-        if (session) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('user_id', session.user.id)
-            .single();
-          
-          setIsAuthenticated(profile?.role === 'admin');
-        } else {
-          setIsAuthenticated(false);
-        }
-      }
-    );
-
-    checkAuth();
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  if (isAuthenticated === null) {
+  // Show loading state
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 flex items-center justify-center">
         <motion.div
@@ -76,31 +34,40 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
           >
             <Loader2 className="w-full h-full text-primary" />
           </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-2xl font-bold text-primary mb-2"
-          >
-            Verifying Access
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-muted-foreground"
-          >
-            Checking authentication status...
-          </motion.p>
+          <h2 className="text-2xl font-bold text-primary mb-2">Verifying Access</h2>
+          <p className="text-muted-foreground">Checking authentication status...</p>
         </motion.div>
       </div>
     );
   }
 
+  // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to={redirectTo} replace />;
+    return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
 
+  // Check admin requirement
+  if (requireAdmin && !isAdmin) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center max-w-md mx-auto p-8 bg-card border border-border rounded-2xl shadow-elegant"
+        >
+          <div className="w-16 h-16 mx-auto mb-6 text-destructive">
+            <Shield className="w-full h-full" />
+          </div>
+          <h2 className="text-2xl font-bold text-destructive mb-2">Access Denied</h2>
+          <p className="text-muted-foreground mb-6">
+            You don't have the required permissions to access this page.
+          </p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Render protected content
   return <>{children}</>;
 };
 

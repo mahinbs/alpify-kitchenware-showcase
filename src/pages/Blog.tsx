@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Calendar, User, Tag, Clock, TrendingUp, Search, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
-import { DarkModeContext } from "@/App";
+import { DarkModeContext } from "@/contexts/DarkModeContext";
 import { useBlogs, Blog } from "@/hooks/use-blogs";
-gsap.registerPlugin(ScrollTrigger);
 const BlogPage = () => {
   const {
     darkMode,
@@ -36,34 +33,6 @@ const BlogPage = () => {
     setFilteredBlogs(filtered);
   }, [blogs, searchTerm, categoryFilter]);
   const categories = ["Industry Insights", "Buying Guide", "Recipes", "Company News", "Tips & Tricks"];
-
-  // GSAP animation for blog items
-  useEffect(() => {
-    if (!loading && blogs.length > 0) {
-      const blogItems = document.querySelectorAll('.blog-item');
-      blogItems.forEach((item, index) => {
-        gsap.fromTo(item, {
-          opacity: 0,
-          y: 50
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          delay: index * 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-            end: "bottom 15%",
-            toggleActions: "play none none reverse"
-          }
-        });
-      });
-    }
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, [loading, blogs, filteredBlogs]);
   return <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
@@ -132,7 +101,7 @@ const BlogPage = () => {
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
               <p className="text-muted-foreground">Loading articles...</p>
             </motion.div> : blogs.length > 0 ? <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-               {filteredBlogs.map((blog, index) => <article key={blog.id} className="blog-item bg-card border border-border rounded-2xl overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-500 group">
+               {filteredBlogs.map((blog, index) => <article key={blog.id} className="bg-card border border-border rounded-2xl overflow-hidden shadow-elegant hover:shadow-glow transition-all duration-500 group">
                   {/* Blog Image */}
                   <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 relative overflow-hidden">
                     <img src={blog.image} alt={blog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />

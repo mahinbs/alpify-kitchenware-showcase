@@ -26,17 +26,10 @@ import BlogTest from "./pages/BlogTest";
 import BlogDetail from "./pages/BlogDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import { AuthProvider } from "./contexts/AuthContext";
+import { DarkModeContext } from "./contexts/DarkModeContext";
 
 const queryClient = new QueryClient();
-
-// Dark mode context
-export const DarkModeContext = React.createContext<{
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-}>({
-  darkMode: false,
-  toggleDarkMode: () => {},
-});
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -119,49 +112,51 @@ const App = () => {
     <DarkModeContext.Provider value={{ darkMode, toggleDarkMode }}>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <div className="min-h-screen bg-background text-foreground scrollbar-thin">
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AnimatePresence mode="wait">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/about" element={<AboutUs />} />
-                  <Route path="/certificate" element={<Certificate />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/contact" element={<ContactUs />} />
-                  <Route path="/blog" element={<BlogPage />} />
-                  <Route path="/blog/:id" element={<BlogDetail />} />
-                  <Route path="/blog-test" element={<BlogTest />} />
-                  <Route path="/cookware" element={<Cookware />} />
-                  <Route path="/dinnerware" element={<Dinnerware />} />
-                  <Route path="/drinkware" element={<Drinkware />} />
-                  <Route path="/serveware" element={<Serveware />} />
-                  <Route path="/storage" element={<Storage />} />
-                  <Route path="/tableware" element={<Tableware />} />
-                  {/* Admin Routes */}
-                  <Route path="/admin/login" element={<AdminLogin />} />
-                  <Route path="/admin/dashboard" element={
-                    <ProtectedRoute>
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/admin/enquiries" element={
-                    <ProtectedRoute>
-                      <AdminEnquiries />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/admin/blogs" element={
-                    <ProtectedRoute>
-                      <AdminBlogs />
-                    </ProtectedRoute>
-                  } />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </AnimatePresence>
-            </BrowserRouter>
-          </div>
+          <AuthProvider>
+            <div className="min-h-screen bg-background text-foreground scrollbar-thin">
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <AnimatePresence mode="wait">
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/certificate" element={<Certificate />} />
+                    <Route path="/services" element={<Services />} />
+                    <Route path="/contact" element={<ContactUs />} />
+                    <Route path="/blog" element={<BlogPage />} />
+                    <Route path="/blog/:id" element={<BlogDetail />} />
+                    <Route path="/blog-test" element={<BlogTest />} />
+                    <Route path="/cookware" element={<Cookware />} />
+                    <Route path="/dinnerware" element={<Dinnerware />} />
+                    <Route path="/drinkware" element={<Drinkware />} />
+                    <Route path="/serveware" element={<Serveware />} />
+                    <Route path="/storage" element={<Storage />} />
+                    <Route path="/tableware" element={<Tableware />} />
+                    {/* Admin Routes */}
+                    <Route path="/admin/login" element={<AdminLogin />} />
+                    <Route path="/admin/dashboard" element={
+                      <ProtectedRoute>
+                        <AdminDashboard />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/admin/enquiries" element={
+                      <ProtectedRoute>
+                        <AdminEnquiries />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/admin/blogs" element={
+                      <ProtectedRoute>
+                        <AdminBlogs />
+                      </ProtectedRoute>
+                    } />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </AnimatePresence>
+              </BrowserRouter>
+            </div>
+          </AuthProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </DarkModeContext.Provider>

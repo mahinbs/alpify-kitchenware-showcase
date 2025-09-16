@@ -21,7 +21,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { DarkModeContext } from "@/App";
+import { DarkModeContext } from "@/contexts/DarkModeContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Product {
   id: string;
@@ -79,13 +80,8 @@ const AdminDashboard = () => {
     "Tableware"
   ];
 
-  // Check authentication on mount
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("adminAuthenticated");
-    if (!isAuthenticated) {
-      navigate("/admin/login");
-    }
-  }, [navigate]);
+  // Authentication is now handled by ProtectedRoute component
+  // No need for manual authentication check here
 
   // Load products from localStorage
   useEffect(() => {
@@ -538,9 +534,10 @@ const AdminDashboard = () => {
     setFilteredProducts(filtered);
   }, [products, searchTerm, selectedCategory]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminAuthenticated");
-    localStorage.removeItem("adminUsername");
+  const { signOut } = useAuth();
+  
+  const handleLogout = async () => {
+    await signOut();
     navigate("/admin/login");
   };
 
@@ -679,7 +676,7 @@ const AdminDashboard = () => {
             </div>
             <div className="flex items-center space-x-4 mt-4 md:mt-0">
               <span className="text-sm text-muted-foreground">
-                Welcome, {localStorage.getItem("adminUsername")}
+                Welcome, Admin
               </span>
               <motion.button
                 onClick={handleLogout}

@@ -4,7 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
-import { DarkModeContext } from "@/App";
+import { DarkModeContext } from "@/contexts/DarkModeContext";
 import { motion } from "framer-motion";
 import { Star, Shield, Zap, CheckCircle, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
