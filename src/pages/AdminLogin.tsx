@@ -52,7 +52,7 @@ const AdminLogin = () => {
       if (!emailOrUsername.includes('@')) {
         // For the specific admin username, use a known email
         if (emailOrUsername === 'admin') {
-          loginEmail = 'admin@alpify.com';
+          loginEmail = 'admin@alpifyglobal.com';
         } else {
           setError("Username not found");
           setIsLoading(false);
