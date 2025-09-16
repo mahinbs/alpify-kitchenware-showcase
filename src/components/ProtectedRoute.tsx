@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loader2, Shield } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Session } from "@supabase/supabase-js";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -13,14 +15,50 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   redirectTo = "/admin/login" 
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
-    const checkAuth = () => {
-      const authStatus = localStorage.getItem("adminAuthenticated");
-      setIsAuthenticated(authStatus === "true");
+    const checkAuth = async () => {
+      // Get current session
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      setSession(currentSession);
+
+      if (currentSession) {
+        // Check if user is admin
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('user_id', currentSession.user.id)
+          .single();
+        
+        setIsAuthenticated(profile?.role === 'admin');
+      } else {
+        setIsAuthenticated(false);
+      }
     };
 
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setSession(session);
+        
+        if (session) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('user_id', session.user.id)
+            .single();
+          
+          setIsAuthenticated(profile?.role === 'admin');
+        } else {
+          setIsAuthenticated(false);
+        }
+      }
+    );
+
     checkAuth();
+
+    return () => subscription.unsubscribe();
   }, []);
 
   if (isAuthenticated === null) {

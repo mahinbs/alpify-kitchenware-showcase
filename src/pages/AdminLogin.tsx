@@ -1,43 +1,89 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Lock, User, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { DarkModeContext } from "@/App";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 const AdminLogin = () => {
   const {
     darkMode,
     toggleDarkMode
   } = useContext(DarkModeContext);
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Admin credentials (in a real app, this would be handled server-side)
-  const ADMIN_CREDENTIALS = {
-    username: "admin",
-    password: "alpify2024"
-  };
+  // Check if user is already authenticated
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        // Check if user is admin
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('user_id', session.user.id)
+          .single();
+        
+        if (profile?.role === 'admin') {
+          navigate("/admin/dashboard");
+        }
+      }
+    };
+    checkAuth();
+  }, [navigate]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
 
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-      // Store admin session
-      localStorage.setItem("adminAuthenticated", "true");
-      localStorage.setItem("adminUsername", username);
-      navigate("/admin/dashboard");
-    } else {
-      setError("Invalid username or password");
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (authError) {
+        setError(authError.message);
+        setIsLoading(false);
+        return;
+      }
+
+      if (data.user) {
+        // Check if user is admin
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('user_id', data.user.id)
+          .single();
+
+        if (profileError || profile?.role !== 'admin') {
+          setError("Access denied. Admin privileges required.");
+          await supabase.auth.signOut();
+          setIsLoading(false);
+          return;
+        }
+
+        toast({
+          title: "Login successful",
+          description: "Welcome back, admin!",
+        });
+        
+        navigate("/admin/dashboard");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
   return <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
@@ -71,14 +117,14 @@ const AdminLogin = () => {
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
-              {/* Username Field */}
+              {/* Email Field */}
               <div>
-                <label htmlFor="username" className="block text-sm font-medium text-foreground mb-2">
-                  Username
+                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  Email
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <input id="username" type="text" value={username} onChange={e => setUsername(e.target.value)} className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Enter username" required />
+                  <input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Enter email" required />
                 </div>
               </div>
 
