@@ -19,8 +19,6 @@ import {
   FileText
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import { DarkModeContext } from "@/contexts/DarkModeContext";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -655,7 +653,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
-      <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
       <div className="pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-6">
@@ -1133,7 +1130,6 @@ const AdminDashboard = () => {
         )}
       </AnimatePresence>
 
-      <Footer />
     </div>
   );
 };

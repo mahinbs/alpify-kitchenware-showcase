@@ -2,8 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Lock, User, AlertCircle, Shield, LogIn } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import { DarkModeContext } from "@/contexts/DarkModeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -81,7 +79,6 @@ const AdminLogin: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
-      <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
       <div className="flex items-center justify-center min-h-screen pt-20 pb-10 px-4">
         <motion.div
@@ -221,8 +218,6 @@ const AdminLogin: React.FC = () => {
           </Card>
         </motion.div>
       </div>
-
-      <Footer />
     </div>
   );
 };

@@ -26,6 +26,7 @@ import BlogTest from "./pages/BlogTest";
 import BlogDetail from "./pages/BlogDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import Layout from "./components/Layout";
 import { AuthProvider } from "./contexts/AuthContext";
 import { DarkModeContext } from "./contexts/DarkModeContext";
 
@@ -117,43 +118,45 @@ const App = () => {
               <Toaster />
               <Sonner />
               <BrowserRouter>
-                <AnimatePresence mode="wait">
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<AboutUs />} />
-                    <Route path="/certificate" element={<Certificate />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/contact" element={<ContactUs />} />
-                    <Route path="/blog" element={<BlogPage />} />
-                    <Route path="/blog/:id" element={<BlogDetail />} />
-                    <Route path="/blog-test" element={<BlogTest />} />
-                    <Route path="/cookware" element={<Cookware />} />
-                    <Route path="/dinnerware" element={<Dinnerware />} />
-                    <Route path="/drinkware" element={<Drinkware />} />
-                    <Route path="/serveware" element={<Serveware />} />
-                    <Route path="/storage" element={<Storage />} />
-                    <Route path="/tableware" element={<Tableware />} />
-                    {/* Admin Routes */}
-                    <Route path="/admin/login" element={<AdminLogin />} />
-                    <Route path="/admin/dashboard" element={
-                      <ProtectedRoute>
-                        <AdminDashboard />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/admin/enquiries" element={
-                      <ProtectedRoute>
-                        <AdminEnquiries />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/admin/blogs" element={
-                      <ProtectedRoute>
-                        <AdminBlogs />
-                      </ProtectedRoute>
-                    } />
-                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </AnimatePresence>
+                <Layout>
+                  <AnimatePresence mode="wait">
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/about" element={<AboutUs />} />
+                      <Route path="/certificate" element={<Certificate />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="/contact" element={<ContactUs />} />
+                      <Route path="/blog" element={<BlogPage />} />
+                      <Route path="/blog/:id" element={<BlogDetail />} />
+                      <Route path="/blog-test" element={<BlogTest />} />
+                      <Route path="/cookware" element={<Cookware />} />
+                      <Route path="/dinnerware" element={<Dinnerware />} />
+                      <Route path="/drinkware" element={<Drinkware />} />
+                      <Route path="/serveware" element={<Serveware />} />
+                      <Route path="/storage" element={<Storage />} />
+                      <Route path="/tableware" element={<Tableware />} />
+                      {/* Admin Routes */}
+                      <Route path="/admin/login" element={<AdminLogin />} />
+                      <Route path="/admin/dashboard" element={
+                        <ProtectedRoute>
+                          <AdminDashboard />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/admin/enquiries" element={
+                        <ProtectedRoute>
+                          <AdminEnquiries />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/admin/blogs" element={
+                        <ProtectedRoute>
+                          <AdminBlogs />
+                        </ProtectedRoute>
+                      } />
+                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </AnimatePresence>
+                </Layout>
               </BrowserRouter>
             </div>
           </AuthProvider>

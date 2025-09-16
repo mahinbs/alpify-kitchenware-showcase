@@ -1,22 +1,16 @@
-import React, { useContext } from "react";
-import Navigation from "@/components/Navigation";
+import React from "react";
 import ElegantVideoHero from "@/components/ElegantVideoHero";
 import VibrantProductCategories from "@/components/VibrantProductCategories";
 import AboutSection from "@/components/AboutSection";
 import BrochureSection from "@/components/BrochureSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
 import StickyQuotationButton from "@/components/StickyQuotationButton";
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
-import { DarkModeContext } from "@/contexts/DarkModeContext";
 
 const Index = () => {
-  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
-
   return (
     <main className="min-h-screen">
-      <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       <ElegantVideoHero />
       <div id="products">
         <VibrantProductCategories />
@@ -27,7 +21,6 @@ const Index = () => {
       <BrochureSection />
       <WhyChooseUs />
       <ContactSection />
-      <Footer />
       <StickyQuotationButton />
       <FloatingWhatsAppButton />
     </main>
