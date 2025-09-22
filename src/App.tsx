@@ -27,6 +27,7 @@ import BlogDetail from "./pages/BlogDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
+import TawkToWidget from "./components/TawkToWidget";
 import { AuthProvider } from "./contexts/AuthContext";
 import { DarkModeContext } from "./contexts/DarkModeContext";
 
@@ -157,6 +158,7 @@ const App = () => {
                     </Routes>
                   </AnimatePresence>
                 </Layout>
+                <TawkToWidget />
               </BrowserRouter>
             </div>
           </AuthProvider>

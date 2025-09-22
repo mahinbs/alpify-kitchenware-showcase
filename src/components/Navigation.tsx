@@ -87,12 +87,12 @@ const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-12 h-12 rounded-lg overflow-hidden shadow-lg"
+              className="w-16 h-12 rounded-lg overflow-hidden shadow-lg"
             >
               <img 
                 src="https://res.cloudinary.com/dknafpppp/image/upload/v1754593817/ChatGPT_Image_Aug_8_2025_12_40_02_AM_o1rxt0.png"
                 alt="Alpify Global Logo"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </motion.div>
             <div className="hidden sm:block">
