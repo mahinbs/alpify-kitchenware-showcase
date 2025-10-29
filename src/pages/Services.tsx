@@ -279,13 +279,13 @@ const Services = () => {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <motion.div 
+                  {/* <motion.div 
                     className="w-16 h-16 mb-6 rounded-full bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-sm flex items-center justify-center border border-white/30"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.8 }}
                   >
                     <div className={`w-8 h-8 bg-${category.color} rounded-full`}></div>
-                  </motion.div>
+                  </motion.div> */}
                   
                   <h3 className="text-2xl font-bold text-primary mb-4 group-hover:text-primary transition-colors">
                     {category.title}
@@ -311,14 +311,14 @@ const Services = () => {
                     ))}
                   </div>
 
-                  <motion.button
+                  {/* <motion.button
                     onClick={() => navigate(category.path)}
                     className={`mt-6 px-6 py-2 bg-${category.color}/20 text-${category.color} rounded-lg font-medium hover:bg-${category.color}/30 transition-colors`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Learn More
-                  </motion.button>
+                  </motion.button> */}
                 </div>
               </motion.div>
             ))}

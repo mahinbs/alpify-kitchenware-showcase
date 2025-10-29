@@ -222,7 +222,7 @@ const VibrantProductCategories = () => {
                     ))}
                   </div>
 
-                  <Link to={`/${category.id}`}>
+                  {/* <Link to={`/${category.id}`}>
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -231,7 +231,7 @@ const VibrantProductCategories = () => {
                       <span>Explore {category.title}</span>
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </motion.button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </motion.div>
