@@ -222,16 +222,16 @@ const VibrantProductCategories = () => {
                     ))}
                   </div>
 
-                  {/* <Link to={`/${category.id}`}>
+                  <Link to={`/${category.id}`}>
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`w-full bg-${category.accentColor} text-white font-semibold py-3 px-4 rounded-xl hover:bg-${category.accentColor}/90 transition-colors duration-300 flex items-center justify-center`}
+                      className="w-full py-4 px-6 bg-gradient-to-r from-primary to-primary/80 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center group"
                     >
                       <span>Explore {category.title}</span>
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </motion.button>
-                  </Link> */}
+                  </Link>
                 </div>
               </div>
             </motion.div>
