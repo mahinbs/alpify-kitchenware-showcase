@@ -161,7 +161,7 @@ const App = () => {
                   </AnimatePresence>
                 </Layout>
                 <TawkToWidget />
-              </ScrollToTop>
+              </BrowserRouter>
             </div>
           </AuthProvider>
         </TooltipProvider>
