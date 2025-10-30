@@ -30,6 +30,7 @@ import Layout from "./components/Layout";
 import TawkToWidget from "./components/TawkToWidget";
 import { AuthProvider } from "./contexts/AuthContext";
 import { DarkModeContext } from "./contexts/DarkModeContext";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -119,6 +120,7 @@ const App = () => {
               <Toaster />
               <Sonner />
               <BrowserRouter>
+              <ScrollToTop/>
                 <Layout>
                   <AnimatePresence mode="wait">
                     <Routes>
@@ -159,7 +161,7 @@ const App = () => {
                   </AnimatePresence>
                 </Layout>
                 <TawkToWidget />
-              </BrowserRouter>
+              </ScrollToTop>
             </div>
           </AuthProvider>
         </TooltipProvider>
